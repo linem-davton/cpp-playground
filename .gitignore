@@ -1,5 +1,16 @@
+<<<<<<< HEAD
 # Ignore build directory
 build/
 
 # Ignore VS Code directory
 .vscode/
+=======
+*.i
+*.o
+*.out
+build/
+out/
+.vscode/
+
+
+>>>>>>> 7777bd1 (preprocessor init)
