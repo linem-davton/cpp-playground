@@ -23,5 +23,8 @@ auto main() -> int {
   std::cout << "i_mult " << i_c << "\n";
   std::cout << "mult " << c_c << "\n";
   PRINT(i_c);
+  int j = 2 * (d = 10);
+  PRINT(j);
+  PRINT(d);
   return 0;
 }
