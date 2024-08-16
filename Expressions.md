@@ -57,6 +57,13 @@ Go does not have the assignment expressions.(a = b = 10, not valid)
 Pre-increment: `++x` increments x by 1 and returns the new value of x.
 Post-increment: `x++` returns the current value of x and then increments x by 1.
 
+**Others** Javascript has the same semantics.
+Python does not have pre-increment/decrement operators.
+Go does not support pre-increment/decrement operators.
+Post-increment/decrement operators are only supported in statements. (x++ is valid, not ++x)
+
+````C++
+
 ## Conditional Operator `? :`
 
 `? :` is a ternary operator that takes three operands.
@@ -66,7 +73,7 @@ and the third is the value returned if the condition is false.
 ```C++
 int a = 1, b = 2;
 int z = (a > b) ? a : b; // z  = 2
-```
+````
 
 **Others** Javascript has the same semantics. Python uses `if else` statement.
 Go does not have the conditional operator. Use traditional `if else` statement.
@@ -90,3 +97,46 @@ If the first operand is true, the second operand is not evaluated.
 - User defined types - must have the `operator bool()` defined.
 
 **RETURN VALUE**: bool.
+
+**Others** Javascript and Go has the same semantics. Python uses `and`, `or` operators.
+All have short-circuit evaluation.
+
+## Bitwise Operators
+
+`&`, `|`, `^`, `~`, `<<`, `>>` are bitwise operators that operate on integer operands at the bit level.
+`>>` preserves the sign bit when shifting right, if positive, fills with 0, if negative, fills with 1.
+
+**Others** Same semantics in other languages.
+Go also has `&^` operator for bitwise AND NOT.
+Javascript also has `>>>` operator for unsigned right shift, fills with 0 no matter the sign.
+
+```C++
+let x = 8; //00000000 00000000 00000000 00001000
+let y = -8; //11111111 11111111 11111111 11111000 (in two's complement)
+
+console.log(x >>> 2); // Output: 2, 00000000 00000000 00000000 00000010
+console.log(y >>> 2); // Output: 1073741822, Binary: 00111111 11111111 11111111 11111110
+```
+
+## Relational Operators
+
+`==`, `!=`, `>`, `<`, `>=`, `<=` are relational operators that compare two operands.
+
+**RETURN VALUE**: bool.
+**Others** Same semantics in other languages. Python allows for chaining of relational operators.
+
+```Python
+if 0 < x < 10:
+    print("x is between 0 and 10")
+res = a < b < c # same as (a < b) and (b < c)
+```
+
+## Arithmetic Operators
+
+`+`, `-`, `*`, `/`, `%` are arithmetic operators that perform addition, subtraction, multiplication, division, and modulus.
+
+**RETURN VALUE**: The result of the operation.
+
+**Others** Same semantics in other languages.
+Python has floor division `//` and exponentiation `**` operators.
+Javascript has `**` operator for exponentiation.
