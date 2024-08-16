@@ -14,5 +14,5 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 include_directories(include_dir)
 
 # Executables
-
 add_executable(mulithreading src/multithread.cpp)
+add_executable(macros src/macros.cpp)
