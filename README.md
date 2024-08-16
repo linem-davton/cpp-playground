@@ -46,7 +46,8 @@ There are two types of macros: object-like macros and function-like macros.
 ### Function-like Macros
 
 The preprocessor replaces each occurrence of the macro name followed by a parameter list with the replacement text.
-Use the #define directive to define a function-like macro. The general form of a function-like macro is as follows:
+Use the #define directive to define a function-like macro. Use `\` to continue the macro definition on the next line.
+The general form of a function-like macro is as follows:
 
 ```C++
 #define macro_name(parameter_list) replacement
@@ -59,6 +60,17 @@ Use the #define directive to define a function-like macro. The general form of a
 Use parentheses around the parameter list, no space between macro_name and (.
 The replacement text can be any sequence of tokens, and it can include operators and punctuation.
 When referring to the parameters in the replacement text, use the () around the parameter to avoid operator precendence.
+
+### Variadic Macros
+
+Function like macros that take variable number of arguments.
+Ellipsis `...` denotes the variable number of arguments.
+The `__VA_ARGS__` is a special identifier that represents the variable number of arguments passed to the macro.
+
+```C++
+#define PRINT(format, ...) printf(format, __VA_ARGS__) // one or more arguments
+#define PRINT_CPP(...) std::cout << __VA_ARGS__ << "\n" // zero or more arguments
+```
 
 ## Conditional Compilation
 

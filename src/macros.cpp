@@ -1,5 +1,5 @@
 #include <iostream>
-
+//
 // the following macro is not safe, when a and b are expressions,
 // beacuse of operator precedence, the macro will not work as expected
 #define i_max(a, b) a > b ? a : b
