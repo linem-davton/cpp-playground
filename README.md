@@ -1,3 +1,13 @@
+# Getting Started
+
+Make a buld directory and run cmake to generate the build files.
+
+```BASH
+mkdir build
+cd build
+cmake ..
+```
+
 # C++ Preprocessor
 
 - [C++ Preprocessor](#c-preprocessor)
