@@ -10,8 +10,8 @@ set(CMAKE_BUILD_TYPE Debug)
 
 # Cmake adds -g to the compile options by default for Debug builds
 if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-    add_compile_options(-Wall -Wextra -Wpedantic -Werror -Og -fno-omit-frame-pointer -fsanitize=address,undefined,leak)
-    add_link_options(-fsanitize=address,undefined,leak)
+    add_compile_options(-Wall -Wextra -Wpedantic -Werror -Og -fno-omit-frame-pointer)
+  #add_link_options(-fsanitize=address,undefined,leak)
 elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     add_compile_options(-O2)
 endif()
@@ -24,5 +24,6 @@ endif()
 
 # Executables
 add_executable(hello src/hello.cpp)
+add_executable(fib src/fib.cpp)
 add_executable(jthreads src/jthreads.cpp)
 add_executable(macros src/macros.cpp)
