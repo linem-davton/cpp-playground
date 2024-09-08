@@ -47,7 +47,7 @@ void thread_function() {
   std::cout << "thread function loop exited" << counter << std::endl;
 }
 
-int main(int argc, char *argv[]) {
+int main() {
   std::stop_source stop_source;
 
   { // t1 stop token is signaled by scope exit
@@ -55,12 +55,13 @@ int main(int argc, char *argv[]) {
     std::this_thread::sleep_for(std::chrono::seconds(10));
     std::cout << "exiting main inner scope" << std::endl;
   }
+
+  std::thread thread(thread_function);
   std::jthread t3(jthread_function_manualstop, stop_source.get_token());
-  std::this_thread::sleep_for(std::chrono::seconds(10));
+  std::this_thread::sleep_for(std::chrono::seconds(1000));
 
   stop_source.request_stop();
   // not calling join or detach will cause std::terminate
-  std::thread thread(thread_function);
   std::this_thread::sleep_for(std::chrono::seconds(10));
   std::cout << "Exiting with final count" << counter << std::endl;
 }
