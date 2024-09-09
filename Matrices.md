@@ -26,6 +26,8 @@ Compare the above to
 
 1. For a 1000x1000 matrix multiplication, the cache friendly version is 2x faster than the non-cache friendly version.
 
+### Debug Builds
+
 ```BASH
 # Cache friendly version
  Performance counter stats for './matrices':
@@ -71,4 +73,55 @@ Compare the above to
 
        1.758612000 seconds user
        0.008998000 seconds sys
+```
+
+### Release Builds
+
+Cache Freindly with Release build with `-O2` optimization flag.
+
+```BASH
+ Performance counter stats for './matrices':
+
+            442.76 msec task-clock                       #    0.998 CPUs utilized
+                 1      context-switches                 #    2.259 /sec
+                 0      cpu-migrations                   #    0.000 /sec
+             5,060      page-faults                      #   11.428 K/sec
+     1,960,741,610      cycles                           #    4.428 GHz
+     6,221,499,663      instructions                     #    3.17  insn per cycle
+     1,027,226,285      branches                         #    2.320 G/sec
+         1,038,215      branch-misses                    #    0.10% of all branches
+                        TopdownL1                 #     18.9 %  tma_backend_bound
+                                                  #      1.9 %  tma_bad_speculation
+                                                  #      5.5 %  tma_frontend_bound
+                                                  #     73.7 %  tma_retiring
+
+       0.443480715 seconds time elapsed
+
+       0.434405000 seconds user
+       0.009008000 seconds sys
+```
+
+Non-cache Freindly with Release build with `-O2` optimization flag.
+
+```BASH
+ Performance counter stats for './matrices':
+
+            741.00 msec task-clock                       #    0.999 CPUs utilized
+                 2      context-switches                 #    2.699 /sec
+                 0      cpu-migrations                   #    0.000 /sec
+             5,060      page-faults                      #    6.829 K/sec
+     3,379,589,124      cycles                           #    4.561 GHz
+     9,224,019,517      instructions                     #    2.73  insn per cycle
+     1,027,612,383      branches                         #    1.387 G/sec
+         1,038,018      branch-misses                    #    0.10% of all branches
+                        TopdownL1                 #     47.9 %  tma_backend_bound
+                                                  #      1.2 %  tma_bad_speculation
+                                                  #      2.3 %  tma_frontend_bound
+                                                  #     48.6 %  tma_retiring
+
+       0.741694100 seconds time elapsed
+
+       0.735622000 seconds user
+       0.006005000 seconds sys
+
 ```

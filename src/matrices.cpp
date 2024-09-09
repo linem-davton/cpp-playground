@@ -5,8 +5,6 @@
 #include <random>
 #include <vector>
 
-using std::vector;
-
 struct Dimensions {
   int rows;
   int cols;
@@ -17,10 +15,14 @@ struct limits {
   int max_val;
 };
 
+using VectorInt = std::vector<int>;
+using MatrixInt = std::vector<std::vector<int>>;
+
 // Generate random NxM matrix with values between min_val and max_val
 // (inclusive) with uniform distribution
-std::vector<std::vector<int>> generateRandomMatrix(Dimensions d, limits l) {
-  std::vector<vector<int>> matrix(d.rows, std::vector<int>(d.cols));
+auto generateRandomMatrix(Dimensions d, limits l) -> MatrixInt {
+  MatrixInt matrix(d.rows, VectorInt(d.cols, 0));
+  matrix.reserve(d.rows);
 
   // Random number generation
   std::random_device rd;
@@ -37,20 +39,19 @@ std::vector<std::vector<int>> generateRandomMatrix(Dimensions d, limits l) {
   return matrix;
 }
 
-using VectorInt = std::vector<int>;
-using MatrixInt = std::vector<std::vector<int>>;
-
 auto matrixMultiply(MatrixInt A, MatrixInt B, Dimensions ad,
-                    Dimensions bd) -> std::optional<std::vector<VectorInt>> {
+                    Dimensions bd) -> std::optional<MatrixInt> {
   if (ad.cols != bd.rows) {
     std::cerr << "Matrix multiplication not possible with given dimensions."
               << std::endl;
     return std::nullopt;
   }
 
+  // Cache friendly matrix multiplication, inner loop accesses elements
+  // sequentially with stride 1
   MatrixInt result(ad.rows, std::vector<int>(bd.cols, 0));
   for (int i = 0; i < ad.rows; ++i) {
-    for (int k = 0; k < ad.cols; ++k) { // M1 == N2
+    for (int k = 0; k < ad.cols; ++k) {
       for (int j = 0; j < bd.cols; ++j) {
         result[i][j] += A[i][k] * B[k][j];
       }
