@@ -61,8 +61,8 @@ auto matrixMultiply(const MatrixInt &A, const MatrixInt &B, const Dimensions ad,
 }
 
 void printMatrix(const MatrixInt &matrix) {
-  for (auto row : matrix) {
-    for (auto elem : row) {
+  for (const auto &row : matrix) {
+    for (const auto &elem : row) {
       std::cout << elem << " ";
     }
     std::cout << '\n';
@@ -77,13 +77,13 @@ auto main() -> int {
   const int min_val = 1;
   const int max_val = 99;
 
-  MatrixInt matrix1 = generateRandomMatrix({N1, M1}, {min_val, max_val});
-  MatrixInt matrix2 = generateRandomMatrix({N2, M2}, {min_val, max_val});
+  const MatrixInt matrix1 = generateRandomMatrix({N1, M1}, {min_val, max_val});
+  const MatrixInt matrix2 = generateRandomMatrix({N2, M2}, {min_val, max_val});
 
-  auto result = matrixMultiply(matrix1, matrix2, {N1, M1}, {N2, M2});
+  const auto result = matrixMultiply(matrix1, matrix2, {N1, M1}, {N2, M2});
   if (!result) {
     return 1;
   }
 
-  // printMatrix(result.value());
+  printMatrix(result.value());
 }
