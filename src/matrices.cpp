@@ -20,7 +20,7 @@ using MatrixInt = std::vector<std::vector<int>>;
 
 // Generate random NxM matrix with values between min_val and max_val
 // (inclusive) with uniform distribution
-auto generateRandomMatrix(Dimensions d, limits l) -> MatrixInt {
+auto generateRandomMatrix(const Dimensions d, const limits l) -> MatrixInt {
   MatrixInt matrix(d.rows, VectorInt(d.cols, 0));
   matrix.reserve(d.rows);
 
@@ -39,8 +39,8 @@ auto generateRandomMatrix(Dimensions d, limits l) -> MatrixInt {
   return matrix;
 }
 
-auto matrixMultiply(MatrixInt A, MatrixInt B, Dimensions ad,
-                    Dimensions bd) -> std::optional<MatrixInt> {
+auto matrixMultiply(const MatrixInt &A, const MatrixInt &B, const Dimensions ad,
+                    const Dimensions bd) -> std::optional<MatrixInt> {
   if (ad.cols != bd.rows) {
     std::cerr << "Matrix multiplication not possible with given dimensions."
               << std::endl;
@@ -60,7 +60,7 @@ auto matrixMultiply(MatrixInt A, MatrixInt B, Dimensions ad,
   return result;
 }
 
-void printMatrix(MatrixInt matrix) {
+void printMatrix(const MatrixInt &matrix) {
   for (auto row : matrix) {
     for (auto elem : row) {
       std::cout << elem << " ";
@@ -70,8 +70,6 @@ void printMatrix(MatrixInt matrix) {
 }
 
 auto main() -> int {
-  // intialize two random matrices
-
   const int N1 = 1000;
   const int M1 = 1000;
   const int N2 = 1000;
