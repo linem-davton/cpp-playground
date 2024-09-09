@@ -54,6 +54,19 @@ strace -e trace=network ./a.out # trace only network system calls
 strace -k ./a.out # print call stack
 ```
 
+### lcov
+
+To see how many times a line was executed in the program.
+Must compile with `-coverage` flag.
+
+```BASH
+g++ a.cpp -o a.out  -coverage
+./a.out # generates coverage file , .gcda
+lcov --capture --directory . --output-file coverage.info # Capture coverage data from curr and sub dirs
+genhtml coverage.info --output-directory out # generate html report
+google-chrome out/index.html # open the html repor
+```
+
 ## Documentation
 
 Detailed documentation is available in the [docs](docs) directory.

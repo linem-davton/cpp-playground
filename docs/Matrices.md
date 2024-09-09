@@ -157,3 +157,71 @@ strace  -c ./matrices
 ------ ----------- ----------- --------- --------- ----------------
 100.00    0.016563           2      8159         1 total
 ```
+
+## lcov
+
+```C++
+        :   // Random number generation
+      28            2 :   std::random_device rd;
+      29            2 :   std::mt19937 gen(rd()); // Mersenne Twister engine
+      30            2 :   std::uniform_int_distribution<> dis(l.min_val, l.max_val);
+      31              :
+      32              :   // Fill the matrix with random numbers
+      33         2002 :   for (int i = 0; i < d.rows; ++i) {
+      34      2002000 :     for (int j = 0; j < d.cols; ++j) {
+      35      2000000 :       matrix[i][j] = dis(gen);
+      36              :     }
+      37              :   }
+      38              :
+      39            2 :   return matrix;
+      40            2 : }
+      41              :
+      42            1 : auto matrixMultiply(const MatrixInt &A, const MatrixInt &B, const Dimensions ad,
+      43              :                     const Dimensions bd) -> std::optional<MatrixInt> {
+      44            1 :   if (ad.cols != bd.rows) {
+      45            0 :     std::cerr << "Matrix multiplication not possible with given dimensions."
+      46            0 :               << std::endl;
+      47            0 :     return std::nullopt;
+      48              :   }
+      49              :
+      50              :   // Cache friendly matrix multiplication, inner loop accesses elements
+      51              :   // sequentially with stride 1
+      52            2 :   MatrixInt result(ad.rows, std::vector<int>(bd.cols, 0));
+      53         1001 :   for (int i = 0; i < ad.rows; ++i) {
+      54      1001000 :     for (int k = 0; k < ad.cols; ++k) {
+      55   1001000000 :       for (int j = 0; j < bd.cols; ++j) {
+      56   1000000000 :         result[i][j] += A[i][k] * B[k][j];
+      57              :       }
+      58              :     }
+      59              :   }
+      60            1 :   return result;
+      61            1 : }
+      62              :
+      63            1 : void printMatrix(const MatrixInt &matrix) {
+      64         1001 :   for (const auto &row : matrix) {
+      65      1001000 :     for (const auto &elem : row) {
+      66      1000000 :       std::cout << elem << " ";
+      67              :     }
+      68         1000 :     std::cout << '\n';
+      69              :   }
+      70            1 : }
+      71              :
+      72            1 : auto main() -> int {
+      73            1 :   const int N1 = 1000;
+      74            1 :   const int M1 = 1000;
+      75            1 :   const int N2 = 1000;
+      76            1 :   const int M2 = 1000;
+      77            1 :   const int min_val = 1;
+      78            1 :   const int max_val = 99;
+      79              :
+      80            1 :   const MatrixInt matrix1 = generateRandomMatrix({N1, M1}, {min_val, max_val});
+      81            1 :   const MatrixInt matrix2 = generateRandomMatrix({N2, M2}, {min_val, max_val});
+      82              :
+      83            1 :   const auto result = matrixMultiply(matrix1, matrix2, {N1, M1}, {N2, M2});
+      84            1 :   if (!result) {
+      85            0 :     return 1;
+      86              :   }
+      87            1 :   printMatrix(result.value());
+      88            1 : }
+
+```
