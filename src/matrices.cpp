@@ -50,8 +50,8 @@ auto matrixMultiply(MatrixInt A, MatrixInt B, Dimensions ad,
 
   MatrixInt result(ad.rows, std::vector<int>(bd.cols, 0));
   for (int i = 0; i < ad.rows; ++i) {
-    for (int j = 0; j < bd.cols; ++j) {
-      for (int k = 0; k < ad.cols; ++k) { // M1 == N2
+    for (int k = 0; k < ad.cols; ++k) { // M1 == N2
+      for (int j = 0; j < bd.cols; ++j) {
         result[i][j] += A[i][k] * B[k][j];
       }
     }
