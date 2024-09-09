@@ -25,5 +25,6 @@ endif()
 # Executables
 add_executable(hello src/hello.cpp)
 add_executable(fib src/fib.cpp)
+add_executable(matrices src/matrices.cpp)
 add_executable(jthreads src/jthreads.cpp)
 add_executable(macros src/macros.cpp)
