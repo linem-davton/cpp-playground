@@ -84,6 +84,5 @@ auto main() -> int {
   if (!result) {
     return 1;
   }
-
   printMatrix(result.value());
 }

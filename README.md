@@ -43,6 +43,17 @@ heaptrack --analyze heaptrack*.zst # analyze the heap memory statistics
 
 Heaptrack is a heap memory profiler that tracks all memory allocations and de-allocations in a program. Gui is available in the heaptrack-gui package.
 
+### Strace
+
+```
+strace ./a.out # trace system calls
+strace -c ./a.out # get summary of system calls
+strace -f ./a.out # trace child processes
+strace -e trace=open,close ./a.out # trace only open and close system calls
+strace -e trace=network ./a.out # trace only network system calls
+strace -k ./a.out # print call stack
+```
+
 ## Documentation
 
 Detailed documentation is available in the [docs](docs) directory.

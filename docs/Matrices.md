@@ -125,3 +125,35 @@ Non-cache Freindly with Release build with `-O2` optimization flag.
        0.006005000 seconds sys
 
 ```
+
+## Strace
+
+System call made by the program
+
+```BASH
+strace  -c ./matrices
+
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 88.90    0.014725           1      8000           write
+  5.02    0.000832           8        99           brk
+  2.60    0.000430         430         1           execve
+  2.05    0.000339          15        22           mmap
+  0.41    0.000068          13         5           openat
+  0.24    0.000039           6         6           mprotect
+  0.18    0.000029           7         4           read
+  0.17    0.000028           5         5           close
+  0.17    0.000028           4         6           fstat
+  0.07    0.000012           6         2           pread64
+  0.07    0.000012          12         1         1 access
+  0.04    0.000006           6         1           arch_prctl
+  0.03    0.000005           5         1           set_tid_address
+  0.03    0.000005           5         1           set_robust_list
+  0.03    0.000005           5         1           rseq
+  0.00    0.000000           0         1           munmap
+  0.00    0.000000           0         1           futex
+  0.00    0.000000           0         1           prlimit64
+  0.00    0.000000           0         1           getrandom
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.016563           2      8159         1 total
+```
