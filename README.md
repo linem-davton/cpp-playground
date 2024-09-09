@@ -74,3 +74,4 @@ Detailed documentation is available in the [docs](docs) directory.
 ## References
 
 - [Observability Tools](https://www.youtube.com/watch?v=C9vmS5xV23A)
+- [Perf](https://www.brendangregg.com/perf.html)
