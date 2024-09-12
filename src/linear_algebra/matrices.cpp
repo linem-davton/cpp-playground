@@ -1,25 +1,9 @@
-// computing matrix multiplication of two random matrices
-//
-#include <iostream>
-#include <optional>
-#include <random>
-#include <vector>
+#include "matrices.h"
 
-struct Dimensions {
-  int rows;
-  int cols;
-};
-
-struct limits {
-  int min_val;
-  int max_val;
-};
-
-using VectorInt = std::vector<int>;
-using MatrixInt = std::vector<std::vector<int>>;
-
+using namespace mat;
 // Generate random NxM matrix with values between min_val and max_val
 // (inclusive) with uniform distribution
+
 auto generateRandomMatrix(const Dimensions d, const limits l) -> MatrixInt {
   MatrixInt matrix(d.rows, VectorInt(d.cols, 0));
   matrix.reserve(d.rows);
@@ -67,22 +51,4 @@ void printMatrix(const MatrixInt &matrix) {
     }
     std::cout << '\n';
   }
-}
-
-auto main() -> int {
-  const int N1 = 1000;
-  const int M1 = 1000;
-  const int N2 = 1000;
-  const int M2 = 1000;
-  const int min_val = 1;
-  const int max_val = 99;
-
-  const MatrixInt matrix1 = generateRandomMatrix({N1, M1}, {min_val, max_val});
-  const MatrixInt matrix2 = generateRandomMatrix({N2, M2}, {min_val, max_val});
-
-  const auto result = matrixMultiply(matrix1, matrix2, {N1, M1}, {N2, M2});
-  if (!result) {
-    return 1;
-  }
-  printMatrix(result.value());
 }
