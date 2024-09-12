@@ -5,4 +5,5 @@ build/
 build/
 out/
 .cache/
+coverage.info
 
