@@ -10,13 +10,15 @@
 ## Getting Started
 
 - Make a buld directory and run cmake to generate the build files.
+- [CMake](Cmake)Presets.json defines various debug and release configurations, including the compiler flags.
 
 ```BASH
 mkdir build
-cd build
-cmake ..
-make -j6 # 6 threads
+cmake --preset=debug ..
+cmake --build --preset=debug # uses ninja as the build tool
 ```
+
+The executable is generated in the build/{preset}/src directory.
 
 ## Performance
 
