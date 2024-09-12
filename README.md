@@ -10,7 +10,7 @@
 ## Getting Started
 
 - Make a buld directory and run cmake to generate the build files.
-- [CMake](Cmake.md)Presets.json defines various debug and release configurations, including the compiler flags.
+- [CMake](CMake.md)Presets.json defines various debug and release configurations, including the compiler flags.
 
 ```BASH
 mkdir build
