@@ -4,6 +4,8 @@ using namespace mat;
 // Generate random NxM matrix with values between min_val and max_val
 // (inclusive) with uniform distribution
 
+namespace mat {
+
 auto generateRandomMatrix(const Dimensions d, const limits l) -> MatrixInt {
   MatrixInt matrix(d.rows, VectorInt(d.cols, 0));
   matrix.reserve(d.rows);
@@ -52,3 +54,4 @@ void printMatrix(const MatrixInt &matrix) {
     std::cout << '\n';
   }
 }
+} // namespace mat

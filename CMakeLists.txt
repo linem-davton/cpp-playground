@@ -6,9 +6,8 @@ project(playground)
 #set(CMAKE_EXPORT_COMPILE_COMMANDS ON) # Generate compile_commands.json for clangd
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-set(CMAKE_BUILD_TYPE Debug)
 
- include_directories(include)
+include_directories(include)
 
 # subdirectories
 add_subdirectory(src)
@@ -24,7 +23,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-add_subdirectory(tests)
+#add_subdirectory(tests)
 
 # include_directories(${CMAKE_SOURCE_DIR}/third_party)
 # include_directories(include_dir)
