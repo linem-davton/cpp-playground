@@ -14,7 +14,7 @@
 
 ```BASH
 mkdir build
-cmake --preset=debug ..
+cmake --preset=debug
 cmake --build --preset=debug # uses ninja as the build tool
 ```
 
@@ -83,7 +83,8 @@ Configure CMakeLists.txt to use GTest.
 include(FetchContent)
 FetchContent_Declare(
   googletest
-  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+  GIT_REPOSITORY https://github.com/google/googletest.git
+  GIT_TAG v1.15.2
 )
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
@@ -95,7 +96,6 @@ enable_testing() # set at the top level CMakeLists.txt to generate CTestTestfile
 To build tests, add the following to CMakeLists.txt.
 
 ```cmake
-
 # first test
 add_executable(test_matrix test_matrix.cpp)
 target_link_libraries(test_matrix PRIVATE matrices GTest::gtest_main)
@@ -108,8 +108,9 @@ gtest_discover_tests(test_matrix)
 To run the tests, use the following command.
 
 ```bash
-ctest --test-dir build/debug/tests
-``
+ctest --test-dir build/debug/tests # the location of CTestTestfile.cmake
+ctest --preset=debug -V # run all tests
+```
 
 ## Documentation
 
@@ -120,4 +121,3 @@ Detailed documentation is available in the [docs](docs) directory.
 - [Observability Tools](https://www.youtube.com/watch?v=C9vmS5xV23A)
 - [Perf](https://www.brendangregg.com/perf.html)
 - [Google Test](https://google.github.io/googletest/)
-```
