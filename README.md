@@ -34,7 +34,9 @@ perf record --call-graph dwarf -F 99 ./a.out # record call graph
 perf script | speedscope -  # Vizualize the call graph and flame graph
 ```
 
-speedscope: https://www.speedscope.app/
+Perf benchmarks for matrix multiplication are available in the [matrices](docs/matrices.md) directory.
+
+Speedscope: https://www.speedscope.app/
 
 ### Heaptrack
 
@@ -69,6 +71,46 @@ genhtml coverage.info --output-directory out # generate html report
 google-chrome out/index.html # open the html repor
 ```
 
+## Testing
+
+### Google Test
+
+Setting up [GTest with CMake](https://google.github.io/googletest/quickstart-cmake.html)
+
+Configure CMakeLists.txt to use GTest.
+
+```cmake
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/03597a01ee50ed33e9dfd640b249b4be3799d395.zip
+)
+# For Windows: Prevent overriding the parent project's compiler/linker settings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+```
+
+To build tests, add the following to CMakeLists.txt.
+
+```cmake
+enable_testing()
+
+# first test
+add_executable(test_matrix test_matrix.cpp)
+target_link_libraries(test_matrix PRIVATE matrices GTest::gtest_main)
+
+# second test
+
+include(GoogleTest)
+gtest_discover_tests(test_matrix)
+```
+
+To run the tests, use the following command.
+
+```bash
+ctest --test-dir build/debug/tests
+``
+
 ## Documentation
 
 Detailed documentation is available in the [docs](docs) directory.
@@ -77,3 +119,5 @@ Detailed documentation is available in the [docs](docs) directory.
 
 - [Observability Tools](https://www.youtube.com/watch?v=C9vmS5xV23A)
 - [Perf](https://www.brendangregg.com/perf.html)
+- [Google Test](https://google.github.io/googletest/)
+```
