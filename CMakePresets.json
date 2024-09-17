@@ -91,7 +91,9 @@
       },
       "execution": {
         "noTestsAction": "error",
-        "stopOnFailure": true
+        "stopOnFailure": true,
+        "timeout": 600,
+        "jobs": 6
       }
     },
     {

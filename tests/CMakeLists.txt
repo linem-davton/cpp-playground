@@ -1,6 +1,3 @@
-
-enable_testing()
-
 # first test
 add_executable(test_matrix test_matrix.cpp)
 target_link_libraries(test_matrix PRIVATE matrices GTest::gtest_main)

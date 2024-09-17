@@ -61,10 +61,10 @@ strace -k ./a.out # print call stack
 ### lcov
 
 To see how many times a line was executed in the program.
-Must compile with `-coverage` flag.
+Must compile with `--coverage` flag.
 
 ```BASH
-g++ a.cpp -o a.out  -coverage
+g++ a.cpp -o a.out --coverage
 ./a.out # generates coverage file , .gcda
 lcov --capture --directory . --output-file coverage.info # Capture coverage data from curr and sub dirs
 genhtml coverage.info --output-directory out # generate html report
@@ -88,17 +88,17 @@ FetchContent_Declare(
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
+
+enable_testing() # set at the top level CMakeLists.txt to generate CTestTestfile.cmake in correct directory
 ```
 
 To build tests, add the following to CMakeLists.txt.
 
 ```cmake
-enable_testing()
 
 # first test
 add_executable(test_matrix test_matrix.cpp)
 target_link_libraries(test_matrix PRIVATE matrices GTest::gtest_main)
-
 # second test
 
 include(GoogleTest)
