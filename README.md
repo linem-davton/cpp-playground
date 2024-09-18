@@ -4,6 +4,8 @@
 - [Performance](#performance)
   - [Perf](#perf)
   - [Heaptrack](#heaptrack)
+  - [lcov](#lcov)
+  - [Google Benchmark](#google-benchmark)
 - [Documentation](#documentation)
 - [References](#references)
 
@@ -39,15 +41,6 @@ Perf benchmarks for matrix multiplication are available in the [matrices](docs/m
 
 Speedscope: https://www.speedscope.app/
 
-### Heaptrack
-
-```BASH
-heaptrack ./a.out # get heap memory statistics
-heaptrack --analyze heaptrack*.zst # analyze the heap memory statistics
-```
-
-Heaptrack is a heap memory profiler that tracks all memory allocations and de-allocations in a program. Gui is available in the heaptrack-gui package.
-
 ### Strace
 
 ```
@@ -58,6 +51,15 @@ strace -e trace=open,close ./a.out # trace only open and close system calls
 strace -e trace=network ./a.out # trace only network system calls
 strace -k ./a.out # print call stack
 ```
+
+### Heaptrack
+
+```BASH
+heaptrack ./a.out # get heap memory statistics
+heaptrack --analyze heaptrack*.zst # analyze the heap memory statistics
+```
+
+Heaptrack is a heap memory profiler that tracks all memory allocations and de-allocations in a program. Gui is available in the heaptrack-gui package.
 
 ### lcov
 
