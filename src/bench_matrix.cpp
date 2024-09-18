@@ -22,13 +22,8 @@ BENCHMARK(BM_MatrixCreation)
     ->Arg(500); // Example sizes 100x100, 200x200, 500x500
 
 BENCHMARK(BM_MatrixMul)
-    ->RangeMultiplier(2)
-    ->Range(32, 1024) // Matrix sizes 100x100 to 500x500
-    ->Unit(benchmark::kMillisecond);
-
-// Or a range of values for sizes
-// BENCHMARK(BM_MatrixCreation)->RangeMultiplier(2)->Range(64, 512);  // Matrix
-// sizes 64x64 to 512x512 BENCHMARK(BM_MatrixMul)->RangeMultiplier(2)->Range(64,
-// 512);
+    ->RangeMultiplier(2) // Multiply range by 2
+    ->Range(32, 1024)    // Matrix sizes from 32x32 to 1024x1024, steps of 2
+    ->Unit(benchmark::kMillisecond); // Time unit is millisecond
 
 BENCHMARK_MAIN();
