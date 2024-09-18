@@ -72,6 +72,14 @@ genhtml coverage.info --output-directory out # generate html report
 google-chrome out/index.html # open the html repor
 ```
 
+### Google Benchmark
+
+Google Benchmark is a microbenchmark library for C++. Test performance of functions.
+
+```BASH
+./matrices_benchmark --benchmark_filter=BM_MatrixMul # run only the benchmark with the name BM_MatrixMul
+```
+
 ## Testing
 
 ### Google Test
@@ -122,3 +130,4 @@ Detailed documentation is available in the [docs](docs) directory.
 - [Observability Tools](https://www.youtube.com/watch?v=C9vmS5xV23A)
 - [Perf](https://www.brendangregg.com/perf.html)
 - [Google Test](https://google.github.io/googletest/)
+- [Google Benchmark](https://github.com/google/benchmark)
