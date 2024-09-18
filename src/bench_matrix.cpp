@@ -13,17 +13,18 @@ static void BM_MatrixMul(benchmark::State &state) {
   mat::MatrixInt A = mat::generateRandomMatrix({N, N}, {1, 99});
   mat::MatrixInt B = mat::generateRandomMatrix({N, N}, {1, 99});
   for (auto _ : state) {
-    mat::matrixMultiply(A, B, {100, 100}, {100, 100});
+    mat::matrixMultiply(A, B, {N, N}, {N, N});
   }
 }
 BENCHMARK(BM_MatrixCreation)
     ->Arg(100)
     ->Arg(200)
     ->Arg(500); // Example sizes 100x100, 200x200, 500x500
+
 BENCHMARK(BM_MatrixMul)
-    ->Arg(100)
-    ->Arg(200)
-    ->Arg(500); // Example sizes 100x100, 200x200, 500x500
+    ->RangeMultiplier(2)
+    ->Range(32, 1024) // Matrix sizes 100x100 to 500x500
+    ->Unit(benchmark::kMillisecond);
 
 // Or a range of values for sizes
 // BENCHMARK(BM_MatrixCreation)->RangeMultiplier(2)->Range(64, 512);  // Matrix
