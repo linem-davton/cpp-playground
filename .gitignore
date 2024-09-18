@@ -1,9 +1,10 @@
 build/
-*.i
-*.o
-*.out
+**/*.i
+**/*.o
+**/*.s
+**/*.out
 build/
 out/
 .cache/
-coverage.info
+**/coverage.info
 
