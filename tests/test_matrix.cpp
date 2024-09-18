@@ -14,7 +14,6 @@ TEST(MatrixTest, MatrixGen) {
 }
 TEST(MatrixTest, MatrixMul) {
   std::vector<std::vector<int>> A = {{1, 2}, {3, 4}};
-
   std::vector<std::vector<int>> B = {{5, 6}, {7, 8}};
 
   // Expected result of A * B

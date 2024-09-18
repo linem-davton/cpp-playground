@@ -28,6 +28,7 @@ Build with `-fno-omit-frame-pointer` to disable frame pointer optimization, to m
 
 ```BASH
 perf stat ./matrices # get performance statistics
+perf stat -e cache-references,cache-misses,LLC-loads,LLC-load-misses ./matrices # get cache statistics
 
 # Call graph
 perf record --call-graph dwarf -F 99 ./a.out # record call graph
