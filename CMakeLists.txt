@@ -26,6 +26,7 @@ include_directories(include)
 # Add the subdirectories
 add_subdirectory(src)
 add_subdirectory(tests)
+add_subdirectory(benchmarks)
 
 # include_directories(${CMAKE_SOURCE_DIR}/third_party)
 # include_directories(include_dir)

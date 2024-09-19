@@ -19,7 +19,8 @@ static void BM_MatrixMul(benchmark::State &state) {
 BENCHMARK(BM_MatrixCreation)
     ->Arg(100)
     ->Arg(200)
-    ->Arg(500); // Example sizes 100x100, 200x200, 500x500
+    ->Arg(500)
+    ->Unit(benchmark::kMicrosecond); // Example sizes 100x100, 200x200, 500x500
 
 BENCHMARK(BM_MatrixMul)
     ->RangeMultiplier(2) // Multiply range by 2
