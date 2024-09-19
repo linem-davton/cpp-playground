@@ -1,11 +1,14 @@
 # CPP Playground
 
 - [Getting Started](#getting-started)
+- [Requirements](#requirements)
 - [Performance](#performance)
   - [Perf](#perf)
   - [Heaptrack](#heaptrack)
   - [lcov](#lcov)
   - [Google Benchmark](#google-benchmark)
+- [Testing](#testing)
+  - [Google Test](#google-test)
 - [Documentation](#documentation)
 - [References](#references)
 
@@ -21,6 +24,18 @@ cmake --build --preset=debug # uses ninja as the build tool
 ```
 
 The executable is generated in the build/{preset}/src directory.
+
+## Requirements
+
+- [CMake](https://cmake.org/)
+- [GCC](https://gcc.gnu.org/)
+- [Ninja](https://ninja-build.org/)
+- [Google Test](https://google.github.io/googletest/)
+- [Google Benchmark](https://github.com/google/benchmark)
+- [Heaptrack](https://github.com/KDE/heaptrack)
+- [lcov](http://ltp.sourceforge.net/coverage/lcov.php)
+- [Perf](https://docs.kernel.org/arch/arm64/perf.html#perf)
+- [Strace](https://man7.org/linux/man-pages/man1/strace.1.html)
 
 ## Performance
 
