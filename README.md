@@ -18,6 +18,8 @@
 - `scripts` directory contains scripts to build, test, and benchmark the project.
 
 ```BASH
+git clone git@github.com:linem-davton/cpp-playground.git
+cd cpp-playground
 mkdir build
 ./scripts/install_dep.sh # install dependencies
 ./scripts/build.sh # build the project
