@@ -58,7 +58,7 @@ int main() {
 
   std::thread thread(thread_function);
   std::jthread t3(jthread_function_manualstop, stop_source.get_token());
-  std::this_thread::sleep_for(std::chrono::seconds(1000));
+  std::this_thread::sleep_for(std::chrono::seconds(10));
 
   stop_source.request_stop();
   // not calling join or detach will cause std::terminate

@@ -85,6 +85,8 @@ add_executable(benchmark_name benchmark.cpp) # add benchmark
 target_link_libraries(benchmark_name PRIVATE <libs> benchmark::benchmark) # <libs> is place holder for other libs
 ```
 
+- Add the benchmark to the list of benchmarks in `bench_all.sh` script.
+
 ## Performance
 
 ### Perf
