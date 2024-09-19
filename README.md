@@ -27,6 +27,9 @@ The executable is generated in the build/{preset}/src directory.
 
 ## Requirements
 
+[Install Script](install_dep.sh) installs the following requirements (apt package manager).
+Perf is not available on WSL2. Works on native Linux.
+
 - [CMake](https://cmake.org/)
 - [GCC](https://gcc.gnu.org/)
 - [Ninja](https://ninja-build.org/)
@@ -41,12 +44,20 @@ The executable is generated in the build/{preset}/src directory.
 
 ### Perf
 
-Build with `-fno-omit-frame-pointer` to disable frame pointer optimization, to make call graphs more accurate.(Not tested if disabling frame pointer optimization affects the call graph accuracy.)
+I have not be able to get perf to work on WSL2. Works on native Linux.
 
 ```BASH
 perf stat ./matrices # get performance statistics
 perf stat -e cache-references,cache-misses,LLC-loads,LLC-load-misses ./matrices # get cache statistics
+```
 
+Sample perf stat outputs for matrix multiplication, in the [matrices](docs/matrices.md) directory.
+
+#### Call Graph
+
+Build with `-fno-omit-frame-pointer` to disable frame pointer optimization, to make call graphs more accurate.(Not tested if disabling frame pointer optimization affects the call graph accuracy.)
+
+```BASH
 # Call graph
 perf record --call-graph dwarf -F 99 ./a.out # record call graph
 perf script | speedscope -  # Vizualize the call graph and flame graph
@@ -58,7 +69,7 @@ Speedscope: https://www.speedscope.app/
 
 ### Strace
 
-```
+```BASH
 strace ./a.out # trace system calls
 strace -c ./a.out # get summary of system calls
 strace -f ./a.out # trace child processes
@@ -68,6 +79,10 @@ strace -k ./a.out # print call stack
 ```
 
 ### Heaptrack
+
+```BASH
+sudo apt install heaptrack
+```
 
 ```BASH
 heaptrack ./a.out # get heap memory statistics
