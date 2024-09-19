@@ -1,14 +1,15 @@
 #include <iostream>
 
-int fib(int n) {
+constexpr auto fib(int n) -> int {
   if (n <= 1) {
     return n;
   }
   return fib(n - 1) + fib(n - 2);
 }
 
-int main() {
-  int n = 10;
-  std::cout << "fib(" << n << ") = " << fib(n) << "\n";
+auto main() -> int {
+  const int n = 10;
+  constexpr int result = fib(n);
+  std::cout << "fib(" << n << ") = " << result << "\n";
   return 0;
 }
