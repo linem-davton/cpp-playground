@@ -14,16 +14,19 @@
 
 ## Getting Started
 
-- Make a buld directory and run cmake to generate the build files.
 - [CMake](CMake.md)Presets.json defines various debug and release configurations, including the compiler flags.
+- `scripts` directory contains scripts to build, test, and benchmark the project.
 
 ```BASH
 mkdir build
-cmake --preset=debug
-cmake --build --preset=debug # uses ninja as the build tool
+./scripts/install_dep.sh # install dependencies
+./scripts/build.sh # build the project
+./scripts/test_all.sh # run all tests
+./scripts/bench_all.sh # run all benchmarks , can be time consuming
+
 ```
 
-The executable is generated in the build/{preset}/src directory.
+The executables are generated in the build/{preset}/bin directory.
 
 ## Requirements
 
@@ -40,6 +43,47 @@ Perf is not available on WSL2. Works on native Linux.
 - [lcov](http://ltp.sourceforge.net/coverage/lcov.php)
 - [Perf](https://docs.kernel.org/arch/arm64/perf.html#perf)
 - [Strace](https://man7.org/linux/man-pages/man1/strace.1.html)
+
+## Adding Executables
+
+Place the header files in the `include` directory.
+Place the source files in the `src` directory, or in a new subdirectory in the `src` directory.
+Configure CMake by Adding the following to the CMakeLists.txt file in `src` dir to build the executable.
+
+```cmake
+add_executable(a.out a.cpp) # add executable
+target_link_libraries(a.out PRIVATE <libs>) # link libraries
+```
+
+## Adding Libraries
+
+Add header files in the `include` directory.
+Place the source files in a new subdirectory in the `src` directory.
+Configure CMake by Adding the following to the CMakeLists.txt file in the new subdirectory to build the library.
+
+```CMake
+add_library(lib_name STATIC lib.cpp <other.cpp>) # <other.cpp> is placeholder for other source files
+```
+
+## Adding Tests
+
+The project uses Google Test for testing. Place the test files in the `tests` directory.
+Add the following to the CMakeLists.txt file in the `tests` directory to build the test.
+
+```CMake
+add_executable(test_name test.cpp) # add test
+target_link_libraries(test_name PRIVATE <libs> GTest::gtest_main) # <libs> is place holder for other libs
+```
+
+## Adding Benchmarks
+
+The project uses Google Benchmark for benchmarking. Place the benchmark files in the `benchmarks` directory.
+Add the following to the CMakeLists.txt file in the `benchmarks` directory to build the benchmark.
+
+```CMake
+add_executable(benchmark_name benchmark.cpp) # add benchmark
+target_link_libraries(benchmark_name PRIVATE <libs> benchmark::benchmark) # <libs> is place holder for other libs
+```
 
 ## Performance
 
