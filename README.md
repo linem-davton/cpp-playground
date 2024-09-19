@@ -32,6 +32,7 @@ Perf is not available on WSL2. Works on native Linux.
 
 - [CMake](https://cmake.org/)
 - [GCC](https://gcc.gnu.org/)
+- [GDB](https://www.gnu.org/software/gdb/)
 - [Ninja](https://ninja-build.org/)
 - [Google Test](https://google.github.io/googletest/)
 - [Google Benchmark](https://github.com/google/benchmark)

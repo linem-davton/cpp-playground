@@ -13,6 +13,9 @@ sudo apt install build-essential -y
 # --- Install strace ---
 sudo apt install strace -y
 
+# --- Install gdb ---
+sudo apt install gdb -y
+
 # ----- CMake 3.30.2 -----
 wget https://github.com/Kitware/CMake/releases/download/v3.30.2/cmake-3.30.2-linux-x86_64.sh
 sudo sh cmake-3.30.2-linux-x86_64.sh --prefix=/usr/local --skip-license
