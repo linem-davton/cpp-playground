@@ -21,7 +21,7 @@ wget https://github.com/Kitware/CMake/releases/download/v3.30.2/cmake-3.30.2-lin
 sudo sh cmake-3.30.2-linux-x86_64.sh --prefix=/usr/local --skip-license
 rm cmake-3.30.2-linux-x86_64.sh
 
-# ----- Ninja 1.10.0 -----
+# ----- Ninja-----
 sudo apt install ninja-build -y
 
 # ---- Install lcov ----
