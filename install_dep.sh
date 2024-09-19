@@ -27,6 +27,27 @@ sudo apt install lcov -y
 # --- Install heaptrack
 sudo apt install heaptrack -y
 
+
+# ---- Google Benchmark ----
+
+# Check out the library.
+git clone https://github.com/google/benchmark.git
+# Go to the library root directory
+cd benchmark
+# Make a build directory to place the build output.
+cmake -E make_directory "build"
+# Generate build system files with cmake, and download any dependencies.
+cmake -E chdir "build" cmake -DBENCHMARK_DOWNLOAD_DEPENDENCIES=on -DCMAKE_BUILD_TYPE=Release ../
+# Build the library.
+cmake --build "build" --config Release
+# Run tests
+cmake -E chdir "build" ctest --build-config Release
+# Install the library.
+sudo cmake --build "build" --config Release --target install
+# Clean up
+cd ..
+rm -rf benchmark
+
 # ---- Install perf ---- Fails on WSL
 sudo apt install linux-tools-common linux-tools-generic linux-tools-$(uname -r) -y
 
