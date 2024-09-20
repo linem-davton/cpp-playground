@@ -4,13 +4,20 @@
 set -eo pipefail
 
 build_presets=("debug" "debug-sanitize" "release" "release-lto" "release-sanitize")
+# Declare an array to hold the PIDs
+declare -a pids
 
 for preset in "${build_presets[@]}"; do
     echo -e "\033[1;32mBuilding for preset: $preset \033[0m"
-    cmake --preset=$preset
-    cmake --build --preset=$preset
-    if [ $? -ne 0 ]; then
-        echo -e "\033[1;31mBuild failed for preset: $preset \033[0m"
+    cmake --preset=$preset && cmake --build --preset=$preset &
+    pids+=($!) # Save the PID of the last background process
+
+done
+
+# Wait for all background processes to finish
+for pid in "${pids[@]}"; do
+    if ! wait $pid; then
+        echo -e "\033[1;31mBuild failed for one of the presets. \033[0m"
         exit 1
     fi
 done
