@@ -210,5 +210,6 @@ Detailed documentation is available in the [docs](docs) directory.
 
 - [Observability Tools](https://www.youtube.com/watch?v=C9vmS5xV23A)
 - [Perf](https://www.brendangregg.com/perf.html)
+- [Speedscope](https://www.npmjs.com/package/speedscope/v/0.7.0)
 - [Google Test](https://google.github.io/googletest/)
 - [Google Benchmark](https://github.com/google/benchmark)
