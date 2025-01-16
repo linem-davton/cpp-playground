@@ -1,0 +1,44 @@
+BasedOnStyle: Google
+IndentWidth: 4 # Use 4 spaces for indentation
+TabWidth: 4 # Tab width set to 4
+UseTab: Never # Never use tabs, only spaces
+
+# Column limits
+ColumnLimit: 240 # Maximum line length set to 80
+
+# Alignments and formatting
+AlignTrailingComments: true # Align trailing comments
+
+# Indentation settings
+IndentCaseLabels: true # Indent case labels in switch statements
+BreakBeforeBraces: Attach # Use Attach style for braces
+
+# Namespace settings
+NamespaceIndentation: None # No indentation for contents of namespaces
+
+# Pointer and reference alignment
+PointerAlignment: Left # Align pointers to the left
+ReferenceAlignment: Left # Align references to the left
+
+# Spaces settings
+SpaceBeforeParens: ControlStatements # Add space before parentheses in control statements
+SpaceBeforeRangeBasedForLoopColon: true # Add space before colon in range-based for loops
+
+# Additional settings for readability
+KeepEmptyLinesAtTheStartOfBlocks: false # Do not keep empty lines at the start of blocks
+ReflowComments: true # Reflow comments to fit within the column limit
+SortIncludes: CaseInsensitive # Sort include statements case insensitively
+
+# Formatting for different elements
+BinPackParameters: false # Do not bin-pack parameters in function definitions and calls
+BinPackArguments: false # Do not bin-pack arguments in function calls
+
+# Include settings
+IncludeBlocks: Preserve # Preserve existing include block style
+IncludeCategories:
+  - Regex: '^<.*\.h>'
+    Priority: 1
+  - Regex: "^<.*"
+    Priority: 2
+  - Regex: ".*"
+    Priority: 3
