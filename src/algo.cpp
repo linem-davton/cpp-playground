@@ -11,7 +11,7 @@ void print(std::vector<int> v) {
 }
 
 template <typename T>
-auto shuffle(std::vector<T> v) -> std::vector<T> {
+auto shuffle(std::vector<T>& v) -> std::vector<T> {
     std::random_device rd;
     std::mt19937 rng(rd());  // Mersenne Twister random number generator
     std::shuffle(v.begin(), v.end(), rng);
@@ -49,7 +49,7 @@ auto main() -> int {
     print(v);
 
     // Random shuffle
-    v = shuffle(v);
+    shuffle(v);
     std::cout << "Array after shuffling: " << '\n';
     print(v);
 
@@ -61,7 +61,7 @@ auto main() -> int {
 
     /* Another approach to use Nth element algo in combination of std::sort to sort the smallest N elements of the array */
     /* Use Nth element algo in combination of std::sort to sort the smallest N elements of the array */
-    v = shuffle(v);
+    shuffle(v);
     std::nth_element(v.begin(), v.begin() + 2, v.end());  // 3rd smallest element is at 3rd position
     std::cout << "Array after Nth element" << '\n';
     print(v);
