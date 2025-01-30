@@ -6,7 +6,7 @@
 
 template <typename T>
 void printVec(const std::vector<T>& vec) {
-    for (int elem : vec) {
+    for (T elem : vec) {
         std::cout << elem << " ";
     }
     std::cout << '\n';
@@ -19,14 +19,14 @@ auto random_vector(int size) -> std::vector<T> {
     std::mt19937 eng(rd());  // Mersenne Twister random number generator
     // check if T is of type int
     if constexpr (std::is_integral_v<T>) {
-        std::uniform_int_distribution<int> uniform_dist(0, size);
+        std::uniform_int_distribution<int> int_dist(0, size);
         for (int i = 0; i < size; i++) {
-            v[i] = uniform_dist(eng);
+            v[i] = int_dist(eng);
         }
     } else if constexpr (std::is_floating_point_v<T>) {
-        std::uniform_real_distribution<double> uniform_dist(0, size);
+        std::uniform_real_distribution<double> real_dist(1.0, size);
         for (int i = 0; i < size; i++) {
-            v[i] = uniform_dist(eng);
+            v[i] = real_dist(eng);
         }
     }
     return v;
