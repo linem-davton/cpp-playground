@@ -3,6 +3,7 @@
 #include <random>
 #include <type_traits>
 #include <vector>
+
 template <typename T>
 void printVec(const std::vector<T>& vec) {
     for (int elem : vec) {
@@ -22,12 +23,11 @@ auto random_vector(int size) -> std::vector<T> {
         for (int i = 0; i < size; i++) {
             v[i] = uniform_dist(eng);
         }
-        return v;
     } else if constexpr (std::is_floating_point_v<T>) {
         std::uniform_real_distribution<double> uniform_dist(0, size);
         for (int i = 0; i < size; i++) {
             v[i] = uniform_dist(eng);
         }
-        return v;
     }
+    return v;
 }
