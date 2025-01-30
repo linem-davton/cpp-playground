@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include <vector>
 #include "array_utils.h"
 
@@ -25,18 +26,23 @@ void bubble_sort(std::vector<T>& v) {
     }
 }
 
-auto main() -> int {
-    int size;
-    std::cout << "Enter the size of array \n";
-    std::cin >> size;
+auto main(int argc, char* argv[]) -> int {
+    int size = 0;
+    if (argc > 1) {
+        size = std::stoi(argv[1]);
+    } else {
+        std::cout << "Enter the size of array \n";
+        std::cin >> size;
+    }
     std::vector<int> vec = random_vector<int>(size);
     std::vector<double> vec1 = random_vector<double>(size);
+
+    printVec<int>(vec);
+    printVec<double>(vec1);
 
     bubble_sort(vec);
     bubble_sort(vec1);
 
-    printVec<int>(vec);
-    printVec<double>(vec1);
     printVec<int>(vec);
     printVec<double>(vec1);
     return 0;
