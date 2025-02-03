@@ -1,4 +1,5 @@
 #pragma once
+#include <algorithm>
 #include <iostream>
 #include <random>
 #include <type_traits>
@@ -29,5 +30,12 @@ auto random_vector(int size) -> std::vector<T> {
             v[i] = real_dist(eng);
         }
     }
+    return v;
+}
+template <typename T>
+auto shuffle(std::vector<T>& v) -> std::vector<T> {
+    std::random_device rd;
+    std::mt19937 rng(rd());  // Mersenne Twister random number generator
+    std::shuffle(v.begin(), v.end(), rng);
     return v;
 }

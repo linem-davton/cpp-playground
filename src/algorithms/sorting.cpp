@@ -11,8 +11,10 @@ void swap(T& a, T& b) {
     b = temp;
 }
 
-/* Time Complexity - O(n^2)
+/* Buuble Sort
+ * Time Complexity - O(n^2)
  * Swaps consercutive elements which are ordered in reverse order
+ * Early Stop - If no swaps are done in one pass then array is already sorted
  */
 template <typename T>
 void bubble_sort(std::vector<T>& v) {
@@ -25,14 +27,40 @@ void bubble_sort(std::vector<T>& v) {
                 swap(v[j], v[j + 1]);
                 swapped = true;
             }
-            std::cout << "Array after iteration " << i << " and " << j << '\n';
+            std::cout << "BubbleSort: Iteration: " << i << " and " << j << '\n';
             printVec<T>(v);
         }
 
         if (!swapped) {
-            std::cout << "Array is already sorted after iteration: " << i << " instead of: " << n - 1 << "\n";
+            std::cout << "BubbleSort: Array Sorted after iteration: " << i << " instead of: " << n - 1 << "\n";
             break;
         }
+    }
+}
+
+/* Insertion Sort
+ * Time Complexity - O(n^2), Space Complexity - O(1)
+ *
+ */
+
+template <typename T>
+void insertion_sort(std::vector<T>& vec) {
+    int size = vec.size();
+
+    for (int i = 1; i < size; i++) {
+        int key = vec[i];
+        // place the key in the correct position in left subarray,
+        // that is key should be greater than all elements in left subarray
+        int j = i - 1;
+        while (j >= 0 && vec[j] > key) {
+            vec[j + 1] = vec[j];
+            j--;
+            std::cout << "InsertionSort: Iteration " << i << " and " << j << '\n';
+            printVec<T>(vec);
+        }
+        vec[j + 1] = key;
+        std::cout << "InsertionSort: Iteration " << i << '\n';
+        printVec<T>(vec);
     }
 }
 
@@ -47,13 +75,13 @@ auto main(int argc, char* argv[]) -> int {
     std::vector<int> vec = random_vector<int>(size);
     // std::vector<double> vec1 = random_vector<double>(size);
 
+    // Print the vectors before sorting , sort and print the vectors after sorting
     printVec<int>(vec);
-    // printVec<double>(vec1);
-
     bubble_sort(vec);
-    // bubble_sort(vec1);
-
     printVec<int>(vec);
-    // printVec<double>(vec1);
+
+    shuffle(vec);
+    insertion_sort(vec);
+    printVec<int>(vec);
     return 0;
 }

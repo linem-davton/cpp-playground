@@ -5,7 +5,6 @@
 
 #include <algorithm>
 #include <iostream>
-#include <random>
 #include <vector>
 #include "array_utils.h"
 
@@ -14,14 +13,6 @@ void printVec(std::vector<int> v) {
         std::cout << i << " ";
     }
     std::cout << '\n';
-}
-
-template <typename T>
-auto shuffle(std::vector<T>& v) -> std::vector<T> {
-    std::random_device rd;
-    std::mt19937 rng(rd());  // Mersenne Twister random number generator
-    std::shuffle(v.begin(), v.end(), rng);
-    return v;
 }
 
 auto main() -> int {
