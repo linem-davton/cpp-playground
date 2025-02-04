@@ -173,18 +173,18 @@ auto main(int argc, char* argv[]) -> int {
     // Binary Search Example
     int input = 0;
 
-    std::cout << "Enter the number to search, -1 to exit\n";
-    std::cin >> input;
-    while (input != -1) {
+    while (true) {
+        std::cout << "Enter the number to search, -1 to exit\n";
+        std::cin >> input;
+        if (input == -1) {
+            break;
+        }
         auto index = binary_search(vec, input);
         if (index.has_value()) {
-            std::cout << "Element found at index: " << index.value() << "\n";
+            std::cout << "Element " << input << " found at index: " << index.value() << "\n";
         } else {
             std::cout << "Element " << input << " not found\n";
         }
-
-        std::cout << "Enter the number to search, -1 to exit\n";
-        std::cin >> input;
     }
     return 0;
 }
