@@ -1,4 +1,5 @@
 #include <iostream>
+#include <optional>
 #include <string>
 #include <vector>
 #include "array_utils.h"
@@ -122,6 +123,29 @@ void selection_sort(std::vector<int>& vec) {
         }
     }
 }
+/* Binary Search
+ * Time Complexity - O(log n), Space Complexity - O(1)
+ * Note: Array should be sorted
+ */
+
+template <typename T>
+auto binary_search(const std::vector<T>& vec, T key) -> std::optional<int> {
+    int size = vec.size();
+    int low = 0;
+    int high = size - 1;
+    while (low <= high) {
+        int mid = (high + low) / 2;
+        if (vec[mid] == key) {
+            return mid;
+        }
+        if (vec[mid] < key) {
+            low = mid + 1;
+        } else {
+            high = mid - 1;
+        }
+    }
+    return std::nullopt;
+}
 
 auto main(int argc, char* argv[]) -> int {
     int size = 0;
@@ -145,5 +169,22 @@ auto main(int argc, char* argv[]) -> int {
     shuffle(vec);
     insertion_sort(vec);
     printVec<int>(vec);
+
+    // Binary Search Example
+    int input = 0;
+
+    std::cout << "Enter the number to search, -1 to exit\n";
+    std::cin >> input;
+    while (input != -1) {
+        auto index = binary_search(vec, input);
+        if (index.has_value()) {
+            std::cout << "Element found at index: " << index.value() << "\n";
+        } else {
+            std::cout << "Element " << input << " not found\n";
+        }
+
+        std::cout << "Enter the number to search, -1 to exit\n";
+        std::cin >> input;
+    }
     return 0;
 }
