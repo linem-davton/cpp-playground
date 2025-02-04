@@ -123,7 +123,7 @@ void selection_sort(std::vector<int>& vec) {
         }
     }
 }
-/* Binary Search
+/* Classic Binary Search
  * Time Complexity - O(log n), Space Complexity - O(1)
  * Note: Array should be sorted
  */
@@ -143,6 +143,24 @@ auto binary_search(const std::vector<T>& vec, T key) -> std::optional<int> {
         } else {
             high = mid - 1;
         }
+    }
+    return std::nullopt;
+}
+/* Cache Efficient Binary Search
+ *
+ */
+template <typename T>
+auto binary_jump_search(const std::vector<T>& vec, T key) -> std::optional<int> {
+    int size = vec.size();
+
+    int index = 0;
+    for (int jump = size / 2; jump >= 1; jump /= 2) {
+        while (index + jump < size && vec[index + jump] <= key) {
+            index += jump;
+        }
+    }
+    if (vec[index] == key) {
+        return index;
     }
     return std::nullopt;
 }
@@ -179,7 +197,8 @@ auto main(int argc, char* argv[]) -> int {
         if (input == -1) {
             break;
         }
-        auto index = binary_search(vec, input);
+        // auto index = binary_search(vec, input);
+        auto index = binary_jump_search(vec, input);
         if (index.has_value()) {
             std::cout << "Element " << input << " found at index: " << index.value() << "\n";
         } else {
