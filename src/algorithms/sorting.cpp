@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <optional>
 #include <string>
@@ -123,6 +125,53 @@ void selection_sort(std::vector<int>& vec) {
         }
     }
 }
+
+void countingRadixSort(std::vector<int>& vec, int exp) {
+    // make a vector to hold the count of digits 0...9
+    int base = 10;
+    int size = vec.size();
+    std::vector<int> count(base, 0);
+    for (int num : vec) {
+        int digit = (num / (int)std::pow(base, exp)) % base;
+        count[digit]++;
+    }
+    // decide how to fill the vector, for each number decide its place,
+    // IDEA- create a cumulative sum vector for count[]
+    for (int i = 1; i < base; i++) {
+        count[i] += count[i - 1];
+    }
+
+    // create a and fill the ouput vector
+    std::vector<int> output(size);
+    // Start fillng the vector
+    // [20, 23, 34. 43]
+    for (int i = size - 1; i >= 0; i--) {
+        int digit = (vec[i] / (int)std::pow(base, exp)) % base;
+        output[count[digit] - 1] = vec[i];
+        count[digit]--;
+    }
+    for (int i = 0; i < size; i++) {
+        vec[i] = output[i];
+    }
+}
+
+/* Radix sort for Integers
+ * Time Complexity - O(n), Space Complexity - O(n)
+ * Number Theory- Given a number n, the number of digits in n is log10(n)+1
+ * Digit at place p = n / (10^p) % 10
+ */
+void radix_sort(std::vector<int>& vec) {
+    // no of digits
+    int max = *std::max_element(vec.begin(), vec.end());
+    int len = std::to_string(max).length();
+    std::cout << "Max: " << max << " and len: " << len << '\n';
+    // Sort starting with LSD, least significant digit.
+    for (int i = 0; i < len; i++) {
+        // i refers to which digit to sort for
+        countingRadixSort(vec, i);
+    }
+}
+
 /* Classic Binary Search
  * Time Complexity - O(log n), Space Complexity - O(1)
  * Note: Array should be sorted
@@ -185,8 +234,13 @@ auto main(int argc, char* argv[]) -> int {
     printVec<int>(vec);
 
     shuffle(vec);
-    insertion_sort(vec);
-    printVec<int>(vec);
+    // insertion_sort(vec);
+    // printVec<int>(vec);
+
+    shuffle(vec);
+    printVec(vec);
+    radix_sort(vec);
+    printVec(vec);
 
     // Binary Search Example
     int input = 0;
