@@ -7,4 +7,5 @@ build/
 out/
 .cache/
 **/coverage.info
+**/doxygen-output
 
