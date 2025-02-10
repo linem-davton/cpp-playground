@@ -48,9 +48,9 @@ Perf is not available on WSL2. Works on native Linux.
 
 ## Adding Executables
 
-Place the header files in the `include` directory.
-Place the source files in the `src` directory, or in a new subdirectory in the `src` directory.
-Configure CMake by Adding the following to the CMakeLists.txt file in `src` dir to build the executable.
+- Place the header files in the `include` directory.
+- Place the source files in the `src` directory, or in a new subdirectory in the `src` directory.
+- Configure CMake by Adding the following to the CMakeLists.txt file in `src` dir to build the executable.
 
 ```cmake
 add_executable(a.out a.cpp) # add executable
