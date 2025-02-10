@@ -3,9 +3,11 @@ add_executable(test_matrix test_matrix.cpp)
 target_link_libraries(test_matrix PRIVATE matrices GTest::gtest_main)
 
 # second test
-#add_executable(test_core core_functions_tests.cpp ../src/core_functions.cpp)
-#target_link_libraries(Tests PRIVATE GTest::gtest_main)
-#target_include_directories(Tests PRIVATE ../src)
+add_executable(test_array test_array.cpp)
+target_link_libraries(test_array PRIVATE matrices GTest::gtest_main)
 
+
+# discover tests
 include(GoogleTest)
 gtest_discover_tests(test_matrix)
+gtest_discover_tests(test_array)
