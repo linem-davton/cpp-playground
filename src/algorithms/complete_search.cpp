@@ -4,11 +4,15 @@
 #include "array_utils.h"
 template <typename T>
 /*
- * @breif
+ * @breif Generate all possible subsets of a given set
  * @detail Creates a binary decision tree, each element can either be in or out of the subset
  * First Branch: Consider the case where current index element is not part of the subset
  * Second Branch: Make the current element part of the subset.
  * Cleanup: remove the element from the subset vector.
+ * Time Complexity: O(2^n), Space Complexity: O(n)
+ * @param vec: Input vector
+ * @param index: Current index being considered
+ * @param subset: Current subset being considered
  */
 auto generateSubsets(std::vector<T>& vec, std::size_t index, std::vector<T>& subset) {
     // Base Case: when each element has been considered, index points past the last element
