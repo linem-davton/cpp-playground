@@ -50,7 +50,7 @@ Perf is not available on WSL2. Works on native Linux.
 
 - Place the header files in the `include` directory.
 - Place the source files in the `src` directory, or in a new subdirectory in the `src` directory.
-- Configure CMake by Adding the following to the CMakeLists.txt file in `src` dir to build the executable.
+- Configure CMake by Adding the following to the [CMakeLists.txt](src/CMakeLists.txt) file in `src` dir.
 
 ```cmake
 add_executable(a.out a.cpp) # add executable
@@ -59,9 +59,9 @@ target_link_libraries(a.out PRIVATE <libs>) # link libraries
 
 ## Adding Libraries
 
-Add header files in the `include` directory.
-Place the source files in a new subdirectory in the `src` directory.
-Configure CMake by Adding the following to the CMakeLists.txt file in the new subdirectory to build the library.
+- Add header files in the `include` directory.
+- Place the source files in a new subdirectory in the `src` directory.
+- Configure CMake by Adding the following to the [CMakeLists.txt](src/CMakeLists.txt) file in `src` dir or create a new `CMakeLists.txt` file in the newly created subdirectory.
 
 ```CMake
 add_library(lib_name STATIC lib.cpp <other.cpp>) # <other.cpp> is placeholder for other source files
@@ -69,8 +69,11 @@ add_library(lib_name STATIC lib.cpp <other.cpp>) # <other.cpp> is placeholder fo
 
 ## Adding Tests
 
-The project uses Google Test for testing. Place the test files in the `tests` directory.
-Add the following to the CMakeLists.txt file in the `tests` directory to build the test.
+> [!NOTE]
+> The project uses Google Test for testing.
+
+- Place the test files in the `tests` directory.
+- Add the following to the CMakeLists.txt file in the `tests` directory to build the test.
 
 ```CMake
 add_executable(test_name test.cpp) # add test
@@ -93,7 +96,7 @@ See [benchmark.md](benchmarks/benchmark.md) for more.
 
 - Add the benchmark to the list of benchmarks in `bench_all.sh` script.
 
-## Performance
+## Measuring Performance
 
 ### Perf
 
