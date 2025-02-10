@@ -77,6 +77,8 @@ add_executable(test_name test.cpp) # add test
 target_link_libraries(test_name PRIVATE <libs> GTest::gtest_main) # <libs> is place holder for other libs
 ```
 
+See [testing.md](docs/testing.md) for more.
+
 ## Adding Benchmarks
 
 The project uses Google Benchmark for benchmarking. Place the benchmark files in the `benchmarks` directory.
