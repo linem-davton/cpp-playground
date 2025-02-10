@@ -14,7 +14,7 @@
 
 ## Getting Started
 
-- [CMake](CMake.md)Presets.json defines various debug and release configurations, including the compiler flags.
+- [CMake](docs/CMake.md)Presets.json defines various debug and release configurations, including the compiler flags.
 - `scripts` directory contains scripts to build, test, and benchmark the project.
 
 ```BASH
@@ -163,47 +163,6 @@ Google Benchmark is a microbenchmark library for C++. Test performance of functi
 
 ```BASH
 ./matrices_benchmark --benchmark_filter=BM_MatrixMul # run only the benchmark with the name BM_MatrixMul
-```
-
-## Testing
-
-### Google Test
-
-Setting up [GTest with CMake](https://google.github.io/googletest/quickstart-cmake.html)
-
-Configure CMakeLists.txt to use GTest.
-
-```cmake
-include(FetchContent)
-FetchContent_Declare(
-  googletest
-  GIT_REPOSITORY https://github.com/google/googletest.git
-  GIT_TAG v1.15.2
-)
-# For Windows: Prevent overriding the parent project's compiler/linker settings
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-FetchContent_MakeAvailable(googletest)
-
-enable_testing() # set at the top level CMakeLists.txt to generate CTestTestfile.cmake in correct directory
-```
-
-To build tests, add the following to CMakeLists.txt.
-
-```cmake
-# first test
-add_executable(test_matrix test_matrix.cpp)
-target_link_libraries(test_matrix PRIVATE matrices GTest::gtest_main)
-# second test
-
-include(GoogleTest)
-gtest_discover_tests(test_matrix)
-```
-
-To run the tests, use the following command.
-
-```bash
-ctest --test-dir build/debug/tests # the location of CTestTestfile.cmake
-ctest --preset=debug -V # run all tests
 ```
 
 ## Documentation
