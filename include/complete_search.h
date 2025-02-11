@@ -121,3 +121,21 @@ auto generatePermuations_iter(std::vector<T>& vec) -> void {
         printVec(vec);
     } while (nextPermutation(vec));
 }
+/*
+ * @breif Generate all possible permutations of a given set using recursion
+ * Time Complexity: O(n!), Space Complexity: O(n)
+ * @param vec: Input vector
+ * @param index: Current index being considered
+ */
+template <typename T>
+auto generatePermuations_recursion(std::vector<T>& vec, std::size_t index) -> void {
+    if (index == vec.size()) {
+        printVec(vec);
+        return;
+    }
+    for (std::size_t i = index; i < vec.size(); i++) {
+        std::swap(vec[index], vec[i]);
+        generatePermuations_recursion(vec, index + 1);
+        std::swap(vec[index], vec[i]);
+    }
+}
