@@ -3,7 +3,7 @@
 # run benchmarks for all build presets
 #set -eo pipefail
 
-benchmarks_executable=("bench_matrix")
+benchmarks_executable=("bench_complete_search")
 build_presets=("debug" "debug-sanitize" "release" "release-lto" "release-sanitize")
 
 for preset in "${build_presets[@]}"; do
