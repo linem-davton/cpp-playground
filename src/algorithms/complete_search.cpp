@@ -1,8 +1,9 @@
+#include <algorithm>
 #include <cstddef>
 #include <vector>
 
 #include "array_utils.h"
-template <typename T>
+
 /*
  * @breif Generate all possible subsets of a given set using recursion
  * @detail Creates a binary decision tree, each element can either be in or out of the subset
@@ -14,6 +15,7 @@ template <typename T>
  * @param index: Current index being considered
  * @param subset: Current subset being considered
  */
+template <typename T>
 auto generateSubsets_recursion(std::vector<T>& vec, std::size_t index, std::vector<T>& subset) -> void {
     // bound check
     if (vec.size() > 25) {
@@ -68,10 +70,63 @@ auto generateSubsets_masking(std::vector<T>& vec) -> void {
     }
 };
 
+/* @breif Custom implementation of std::next_permutation
+ * Time Complexity: O(n), Space Complexity: O(1)
+ * @detail Algorithm: Works in three steps -
+ * 1. Find the first non decreasing sequence from right
+ * 2. Swap the found index, with the smallest greate element in right subarray.
+ * 3. Reverse the array after the swapped index.
+ * 4. Terminate when the array is reverse sorted.
+ * @param vec: Input vector
+ */
+
+template <typename T>
+auto nextPermutation(std::vector<T>& vec) -> bool {
+    // Terminate when the array is reverse sorted.
+    // Find the first non decreasing sequence from right,
+    int size = vec.size();
+    int index = size;
+    for (int i = size - 2; i >= 0; i--) {
+        if (vec[i] < vec[i + 1]) {
+            index = i;
+        }
+    }
+    if (index == size) {
+        return false;
+    }
+    // Swap vec[i] with the smallest greatest element in right array.
+    int small_greatest = index + 1;
+    for (int i = index + 2; i < size; i++) {
+        if (vec[index] < vec[i] && vec[i] < vec[small_greatest]) {
+            small_greatest = i;
+        }
+    }
+    std::swap(vec[index], vec[small_greatest]);
+
+    // Reverse the array after swapped index
+    std::reverse(vec.begin() + index + 1, vec.end());
+    return true;
+}
+
+/*
+ * @breif Generate all possible permutations of a given set using std::next_permutation
+ * Time Complexity: O(n!), Space Complexity: O(n)
+ * @param vec: Input vector
+ */
+template <typename T>
+auto generatePermuations_iter(std::vector<T>& vec) -> void {
+    std::sort(vec.begin(), vec.end());
+    do {
+        // handle the permutation
+        printVec(vec);
+    } while (nextPermutation(vec));
+}
+
 auto main() -> int {
-    std::vector<int> vec = {1, 2, 3};
+    std::vector<int> vec = {1, 2, 3, 4, 5, 6};
     std::vector<int> subset;
-    generateSubsets_recursion(vec, 0, subset);
-    generateSubsets_masking(vec);
+    // generateSubsets_recursion(vec, 0, subset);
+    // generateSubsets_masking(vec);
+    generatePermuations_iter(vec);
     return 0;
 }
