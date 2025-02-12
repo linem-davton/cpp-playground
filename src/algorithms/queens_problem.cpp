@@ -45,13 +45,13 @@ auto queens_arrangement(std::vector<int>& vec, int row, int& count) -> void {
         count++;
         return;
     }
-    // Explore all possible choices (column) for the current state(row)
+    // Explore Choices: all columns for the current state(row)
     for (int i = 0; i < (int)vec.size(); i++) {
-        // Update the state
+        // State Update
         vec[row] = i;  // place the queen at row, column i
         bool valid = true;
 
-        // Check if choice is valid: Ensure that queen placement in column i is valid
+        // Constraints Validation: Ensure that queen placement in column i is valid
         for (int j = 0; j < row; j++) {
             // vec[j] == vec[row] (Same Column) checks if any previous row has queen in the same COLUMN
             // Exmaple: vec = [1, 3, 1, _]  // Queens in row 0 and row 2 are in the same column 1
@@ -60,7 +60,7 @@ auto queens_arrangement(std::vector<int>& vec, int row, int& count) -> void {
                 break;  // Queen cannot be placed in column i, move to the next column
             }
         }
-        // For valid choice Recurse: Queen placement is valid in row and column i, move to the next row
+        // Valid Constaints, Recurse: Queen placement is valid in row and column i, move to the next row
         if (valid) {
             queens_arrangement(vec, row + 1, count);
         }
