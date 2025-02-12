@@ -40,8 +40,10 @@ Findings Any one Silution using Backtracking Recursion:
 */
 
 auto queens_arrangement(std::vector<int>& vec, int row, int& count) -> void {
+    // Base Case: All rows have been considered
     if (row == (int)vec.size()) {
-        printVec(vec);  // Found a valid arrangement
+        // handle the arrangement
+        printVec(vec);
         count++;
         return;
     }
@@ -51,7 +53,7 @@ auto queens_arrangement(std::vector<int>& vec, int row, int& count) -> void {
         vec[row] = i;  // place the queen at row, column i
         bool valid = true;
 
-        // Constraints Validation: Ensure that queen placement in column i is valid
+        // Constraints Validation for given choice: Queen placement in column i is valid.
         for (int j = 0; j < row; j++) {
             // vec[j] == vec[row] (Same Column) checks if any previous row has queen in the same COLUMN
             // Exmaple: vec = [1, 3, 1, _]  // Queens in row 0 and row 2 are in the same column 1
@@ -60,12 +62,13 @@ auto queens_arrangement(std::vector<int>& vec, int row, int& count) -> void {
                 break;  // Queen cannot be placed in column i, move to the next column
             }
         }
-        // Valid Constaints, Recurse: Queen placement is valid in row and column i, move to the next row
+
+        // Valid Constaints, Recurse: Queen placement is valid in row and column i, move to the next row.
         if (valid) {
             queens_arrangement(vec, row + 1, count);
         }
-        // Backtracing: Reset the state
-        vec[row] = -1;  // Not needed for queens_arrangement, but useful for other problems
+        // Backtracing: Reset the state.
+        vec[row] = -1;  // Not needed for queens_arrangement, but useful for other problems.
     }
 }
 
