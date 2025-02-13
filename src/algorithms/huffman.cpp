@@ -14,15 +14,17 @@
 using FrequencyTable = std::unordered_map<std::string, int>;
 using HuffmanCodeTable = std::unordered_map<std::string, std::string>;
 using FrequencyPair = std::pair<std::string, int>;
+using CodePair = std::pair<std::string, std::string>;
 class TreeNode {
    public:
     TreeNode(FrequencyPair val) : val(std::move(val)){};
 
-    bool operator==(const TreeNode& other) { return this->val.first == other.val.first; }
+    auto operator==(const TreeNode& other) const -> bool { return this->val.first == other.val.first; }
     TreeNode* parent{nullptr};  // non owning pointer, just for reference.
     TreeNode* left{nullptr};
     TreeNode* right{nullptr};
     FrequencyPair val;
+    std::string code;
 };
 
 using Tree = std::vector<std::unique_ptr<TreeNode>>;
@@ -50,8 +52,32 @@ auto find_two_smallest(const Tree& input) -> std::pair<int, int> {
     return std::pair<int, int>{smallest_index, second_smallest_index};
 }
 
+void breadth_first_transversal(const TreeNode* root, HuffmanCodeTable& out) {
+    // Base Case: NO childeren
+    if ((root->left == nullptr) && (root->right == nullptr)) {
+        out[root->val.first] = root->code;
+    }
+
+    // Explore all choices: Left and right
+    if (root->left != nullptr) {
+        root->left->code = root->code + "0";
+        breadth_first_transversal(root->left, out);
+    }
+    if (root->right != nullptr) {
+        root->right->code = root->code + "1";
+        breadth_first_transversal(root->right, out);
+    }
+}
+
+auto gen_code(const Tree& tree) -> HuffmanCodeTable {
+    // Root node is pushed last into the vector, just happens to be the case.
+    auto* root = tree.back().get();
+    HuffmanCodeTable out;
+    breadth_first_transversal(root, out);
+    return out;
+}
+
 auto huffman(FrequencyTable input) -> HuffmanCodeTable {
-    HuffmanCodeTable output;
     // std::size_t symbols = input.size();
     Tree tree;
     // Go through the input, in shorted order, lowest FrequcyFist, and append it to the tree
@@ -87,10 +113,14 @@ auto huffman(FrequencyTable input) -> HuffmanCodeTable {
         std::cout << "Tree Element: " << elem->val.first << " : " << elem->val.second << "\n";
     }
     // build the code transerving the tree,
+    auto output = gen_code(tree);
     return output;
 }
 
 auto main() -> int {
     FrequencyTable input{{"A", 2}, {"B", 3}, {"C", 4}, {"D", 6}};
-    auto output = huffman(input);
+    auto out = huffman(input);
+    for (const auto& pair : out) {
+        std::cout << pair.first << " : " << pair.second << "\n";
+    }
 }
