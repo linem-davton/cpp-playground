@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <limits>
+#include <map>
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -12,9 +13,17 @@
 #include <vector>
 
 using FrequencyTable = std::unordered_map<std::string, int>;
-using HuffmanCodeTable = std::unordered_map<std::string, std::string>;
+using HuffmanCodeTable = std::map<std::string, std::string>;
 using FrequencyPair = std::pair<std::string, int>;
 using CodePair = std::pair<std::string, std::string>;
+
+template <typename T>
+void printMap(T map) {
+    for (const auto& pair : map) {
+        std::cout << "Key: " << pair.first << " Val: " << pair.second << "\n";
+    }
+}
+
 class TreeNode {
    public:
     TreeNode(FrequencyPair val) : val(std::move(val)){};
@@ -34,7 +43,7 @@ auto find_two_smallest(const Tree& input) -> std::pair<int, int> {
     int smallest_index = -1;
     int second_smallest_index = -1;
     // Find root nodes smallest
-    for (std::size_t i = 0; i < input.size(); i++) {
+    for (int i = 0; i < (int)input.size(); i++) {
         if (input[i]->parent == nullptr && input[i]->val.second < smallest) {
             smallest = input[i]->val.second;
             smallest_index = i;
@@ -42,7 +51,7 @@ auto find_two_smallest(const Tree& input) -> std::pair<int, int> {
     }
 
     // Find root nodes smallest
-    for (std::size_t i = 0; i < input.size(); i++) {
+    for (int i = 0; i < (int)input.size(); i++) {
         if ((input[i]->parent == nullptr) && (input[i]->val.second < second_smallest) && (input[i] != input[smallest_index])) {
             second_smallest = input[i]->val.second;
             second_smallest_index = i;
@@ -69,20 +78,8 @@ void breadth_first_transversal(const TreeNode* root, HuffmanCodeTable& out) {
     }
 }
 
-auto gen_code(const Tree& tree) -> HuffmanCodeTable {
-    // Root node is pushed last into the vector, just happens to be the case.
-    auto* root = tree.back().get();
-    HuffmanCodeTable out;
-    breadth_first_transversal(root, out);
-    return out;
-}
-
-auto huffman(FrequencyTable input) -> HuffmanCodeTable {
-    // std::size_t symbols = input.size();
+auto huffman(const FrequencyTable& input) -> HuffmanCodeTable {
     Tree tree;
-    // Go through the input, in shorted order, lowest FrequcyFist, and append it to the tree
-    // I have a map of str::int, find the smallest str::int manually
-    //
     for (const auto& elem : input) {
         tree.emplace_back(std::make_unique<TreeNode>(elem));
     }
@@ -109,18 +106,15 @@ auto huffman(FrequencyTable input) -> HuffmanCodeTable {
         tree[second_smallest]->parent = new_node_ptr.get();
         tree.push_back(std::move(new_node_ptr));
     }
-    for (const auto& elem : tree) {
-        std::cout << "Tree Element: " << elem->val.first << " : " << elem->val.second << "\n";
-    }
-    // build the code transerving the tree,
-    auto output = gen_code(tree);
-    return output;
+
+    auto* root = tree.back().get();
+    HuffmanCodeTable out;
+    breadth_first_transversal(root, out);
+    return out;
 }
 
 auto main() -> int {
-    FrequencyTable input{{"A", 2}, {"B", 3}, {"C", 4}, {"D", 6}};
+    FrequencyTable input{{"A", 25}, {"B", 25}, {"C", 20}, {"D", 15}, {"E", 10}, {"F", 5}};
     auto out = huffman(input);
-    for (const auto& pair : out) {
-        std::cout << pair.first << " : " << pair.second << "\n";
-    }
+    printMap(out);
 }
