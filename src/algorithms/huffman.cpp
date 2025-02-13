@@ -61,7 +61,7 @@ auto find_two_smallest(const Tree& input) -> std::pair<int, int> {
     return std::pair<int, int>{smallest_index, second_smallest_index};
 }
 
-void breadth_first_transversal(const TreeNode* root, HuffmanCodeTable& out) {
+void depth_first_transversal(const TreeNode* root, HuffmanCodeTable& out) {
     // Base Case: NO childeren
     if ((root->left == nullptr) && (root->right == nullptr)) {
         out[root->val.first] = root->code;
@@ -70,11 +70,11 @@ void breadth_first_transversal(const TreeNode* root, HuffmanCodeTable& out) {
     // Explore all choices: Left and right
     if (root->left != nullptr) {
         root->left->code = root->code + "0";
-        breadth_first_transversal(root->left, out);
+        depth_first_transversal(root->left, out);
     }
     if (root->right != nullptr) {
         root->right->code = root->code + "1";
-        breadth_first_transversal(root->right, out);
+        depth_first_transversal(root->right, out);
     }
 }
 
@@ -109,7 +109,7 @@ auto huffman(const FrequencyTable& input) -> HuffmanCodeTable {
 
     auto* root = tree.back().get();
     HuffmanCodeTable out;
-    breadth_first_transversal(root, out);
+    depth_first_transversal(root, out);
     return out;
 }
 
