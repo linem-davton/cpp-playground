@@ -4,14 +4,8 @@
 #include <random>
 #include <type_traits>
 #include <vector>
+#include "utils.h"
 
-template <typename T>
-void printVec(const std::vector<T>& vec) {
-    for (T elem : vec) {
-        std::cout << elem << " ";
-    }
-    std::cout << '\n';
-}
 template <typename T>
 auto random_vector(int size) -> std::vector<T> {
     static_assert(std::is_integral_v<T> || std::is_floating_point_v<T>, "Type not supported");
