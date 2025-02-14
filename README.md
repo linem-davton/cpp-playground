@@ -162,7 +162,7 @@ google-chrome out/index.html # open the html repor
 
 > [!TIP]
 > To remove third party code (gtest) and systems libraries from the coverage report, use the
-> lcov --capture --directory . --output-file coverage.info --no-external --exclude '_/googletest/_'
+> `lcov --capture --directory . --output-file coverage.info --no-external --exclude '_/googletest/_'` command.
 
 ### Google Benchmark
 
