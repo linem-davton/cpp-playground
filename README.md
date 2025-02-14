@@ -153,12 +153,16 @@ To see how many times a line was executed in the program.
 Must compile with `--coverage` flag.
 
 ```BASH
-g++ a.cpp -o a.out --coverage
+g++ a.cpp -o a.out --coverage # creates a.out and .gcno file
 ./a.out # generates coverage file , .gcda
-lcov --capture --directory . --output-file coverage.info # Capture coverage data from curr and sub dirs
+lcov --capture --directory . --output-file coverage.info # Capture coverage data from curr and sub dirs .gcda and .gcno files
 genhtml coverage.info --output-directory out # generate html report
 google-chrome out/index.html # open the html repor
 ```
+
+> [!TIP]
+> To remove third party code (gtest) and systems libraries from the coverage report, use the
+> lcov --capture --directory . --output-file coverage.info --no-external --exclude '_/googletest/_'
 
 ### Google Benchmark
 
