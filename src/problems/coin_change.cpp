@@ -56,15 +56,12 @@ auto coinChange_totalSoln(const std::set<int>& coins, int curr_sum, std::set<std
     }
 
     // Explore all valid choices at current state.
-    auto old_sum = curr_sum;
     for (const auto& coin : coins) {
         if (curr_sum + coin <= total) {
-            curr_sum += coin;
             curr_choices.push_back(coin);
-            coinChange_totalSoln(coins, curr_sum, all_choices, curr_choices, total);
+            coinChange_totalSoln(coins, curr_sum + coin, all_choices, curr_choices, total);
             // Backtrack
             curr_choices.pop_back();
-            curr_sum = old_sum;
         }
     }
 }
