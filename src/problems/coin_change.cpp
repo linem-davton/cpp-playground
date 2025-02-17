@@ -14,8 +14,8 @@
  * Output: 0
  * Explanation: No way to make change for 3 cents using only 2 cent coin
  *
- * N = 10, S = {2, 4, 5, 10}
- * Output: 5
+ * N = 12, S = {2, 4, 5, 10}
+ * Output: 6
  * Explanation: 5 ways to make change for 10 cents
  * 1. {2, 2, 2, 2, 2}
  * 2. {2, 2, 2, 4}
@@ -27,6 +27,7 @@
 
 // Recursive solution.
 #include <algorithm>
+#include <climits>
 #include <iostream>
 #include <set>
 #include "utils.h"
@@ -66,13 +67,39 @@ auto coinChange_totalSoln(const std::set<int>& coins, int& state, std::set<std::
     }
 }
 
+/*
+ * Function return INT_MAX if there is no way to make the change.
+ */
+auto coinChange_min(const std::set<int>& coins, int state) -> unsigned int {
+    if (state < 0) {
+        std::cerr << "Invalid state: State: " << state << "\n";
+        return 0;
+    }
+    // Base case
+    if (state == 0) {
+        return 0;
+    }
+    // Explore all choices
+    unsigned int count = INT_MAX;
+    for (const auto& coin : coins) {
+        if (state - coin >= 0) {
+            count = std::min(coinChange_min(coins, state - coin) + 1, count);
+        }
+    }
+    return count;
+}
+
 auto main() -> int {
-    const std::set<int> coins{4, 5, 10};
+    const std::set<int> coins{2, 4, 5, 10};
     int state = 0;
-    int total = 11;
+    int total = 1;
     std::vector<int> choices;
     std::set<std::vector<int>> all_choices;
     coinChange_totalSoln(coins, state, all_choices, choices, total);
     std::cout << "For Sum: " << total << " Total count: " << all_choices.size() << "\n";
+
+    state = 0;
+    unsigned int count = coinChange_min(coins, total);
+    std::cout << "For Sum: " << total << " Min soln: " << count << "\n";
     return 0;
 }
