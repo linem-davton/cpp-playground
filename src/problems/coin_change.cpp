@@ -33,7 +33,7 @@
 #include "utils.h"
 
 /* Find all paths to the node [], from the node N;
- * Counts unique *combination* of coins.
+ * Brute Force: Counts unique *combination* of coins.
  Time complexity is O(n^m), where n is the total amount and m is the number of coins.
  */
 auto coinChange_totalSoln(const std::set<int>& coins, int curr_sum, std::set<std::vector<int>>& all_choices, std::vector<int>& curr_choices, const int total) -> void {
@@ -63,6 +63,35 @@ auto coinChange_totalSoln(const std::set<int>& coins, int curr_sum, std::set<std
             // Backtrack
             curr_choices.pop_back();
         }
+    }
+}
+
+auto coinChange_optimized(const std::set<int>& coins, int curr_sum, std::set<int>::const_iterator start, std::set<std::vector<int>>& all_choices, std::vector<int>& curr_choices, const int total) {
+    // Error handling
+    if (curr_sum > total) {
+        std::cerr << "Invalid state";
+        return;
+    }
+
+    // Base Case
+    if (curr_sum == total) {
+        auto result = all_choices.insert(curr_choices);
+        if (result.second) {  // New solution
+            printVec(curr_choices);
+        }
+        return;
+    }
+
+    // Explore all valid choices at current state.
+    for (auto it = start; it != coins.end(); it++) {
+        auto coin = *it;
+        if (curr_sum + coin > total) {
+            break;
+        }
+        curr_choices.push_back(coin);
+        coinChange_optimized(coins, curr_sum + coin, it, all_choices, curr_choices, total);
+        // Backtrack
+        curr_choices.pop_back();
     }
 }
 
@@ -118,18 +147,17 @@ auto coinChange_min(const std::set<int>& coins, int state, std::vector<int>& mem
 
 auto main() -> int {
     const std::set<int> coins{2, 4, 5, 10};
-    int state = 0;
     int total = 12;
     std::vector<int> choices;
     std::set<std::vector<int>> all_choices;
-    coinChange_totalSoln(coins, state, all_choices, choices, total);
+    // coinChange_totalSoln(coins, 0, all_choices, choices, total);
+    coinChange_optimized(coins, 0, coins.begin(), all_choices, choices, total);
 
     std::vector<int> memo(total + 1, -1);
     int second_count = coinChange_allPermutations(coins, total, memo);
     std::cout << "For Sum: " << total << " Total count: " << all_choices.size() << "\n";
     std::cout << "For Sum: " << total << " All permutations count: " << second_count << "\n";
 
-    state = 0;
     std::vector<int> memo2(total + 1, -1);
     int count = coinChange_min(coins, total, memo2);
     std::cout << "For Sum: " << total << " Min soln: " << count << "\n";
