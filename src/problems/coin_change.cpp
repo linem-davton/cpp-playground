@@ -34,24 +34,25 @@
 // Find all paths to the node [], from the node N;
 // Note this will consider all the permutations as different choices.
 auto coinChange_totalSoln(const std::set<int>& coins, int& state, std::set<std::vector<int>>& all_choices, std::vector<int>& curr_choices, const int total) -> void {
+    // Error handling
     if (state > total) {
         std::cerr << "Invalid state";
         return;
     }
 
-    // Base Case: Reached [] node.
+    // Base Case
     if (state == total) {
         // Check is the permutation already exists.
-        std::vector<int> choices(curr_choices.begin(), curr_choices.end());
+        std::vector<int> choices(curr_choices.begin(), curr_choices.end());  // making a copy of current choices to as sort works in place.
         std::sort(choices.begin(), choices.end());
-        auto result = all_choices.insert(choices);
-        if (result.second) {
+        auto result = all_choices.insert(choices);  // Disregard the pemutations
+        if (result.second) {                        // New solution
             printVec(curr_choices);
         }
         return;
     }
 
-    // Explore all valid coin choices at current node.
+    // Explore all valid choices at current state.
     auto old_state = state;
     for (const auto& coin : coins) {
         if (state + coin <= total) {
