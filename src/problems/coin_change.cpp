@@ -32,8 +32,9 @@
 #include <set>
 #include "utils.h"
 
-// Find all paths to the node [], from the node N;
-// Note this will consider all the permutations as different choices.
+/* Find all paths to the node [], from the node N;
+ Time complexity is O(n^m), where n is the total amount and m is the number of coins.
+ */
 auto coinChange_totalSoln(const std::set<int>& coins, int& state, std::set<std::vector<int>>& all_choices, std::vector<int>& curr_choices, const int total) -> void {
     // Error handling
     if (state > total) {
@@ -67,8 +68,31 @@ auto coinChange_totalSoln(const std::set<int>& coins, int& state, std::set<std::
     }
 }
 
+// Note this will consider all the permutations as different choices.
+auto coinChange_allPermutations(const std::set<int>& coins, int state, std::vector<int>& memo) -> int {
+    if (state < 0) {
+        return 0;
+    }
+    // Base case
+    if (state == 0) {
+        return 1;
+    }
+    if (memo[state] != -1) {
+        return memo[state];
+    }
+    int count = 0;
+    for (const auto& coin : coins) {
+        if (state - coin >= 0) {
+            count += coinChange_allPermutations(coins, state - coin, memo);
+        }
+    }
+    memo[state] = count;
+    return count;
+}
+
 /*
  * Function return INT_MAX if there is no way to make the change.
+ * Time complexity is O(n * m), where n is the total amount and m is the number of coins.
  */
 auto coinChange_min(const std::set<int>& coins, int state, std::vector<int>& memo) -> unsigned int {
     if (state < 0) {
@@ -80,7 +104,7 @@ auto coinChange_min(const std::set<int>& coins, int state, std::vector<int>& mem
         return 0;
     }
     if (memo[state] != -1) {
-        return memo[state];
+        return memo[state];  // memoization
     }
     // Explore all choices
     unsigned int count = INT_MAX;
@@ -90,22 +114,27 @@ auto coinChange_min(const std::set<int>& coins, int state, std::vector<int>& mem
         }
     }
 
-    memo[state] = count;
+    memo[state] = count;  // memoize
     return count;
 }
 
 auto main() -> int {
     const std::set<int> coins{2, 4, 5, 10};
     int state = 0;
-    int total = 3;
+    int total = 12;
     std::vector<int> choices;
     std::set<std::vector<int>> all_choices;
     coinChange_totalSoln(coins, state, all_choices, choices, total);
+
+    std::vector<int> memo(total + 1, -1);
+    int second_count = coinChange_allPermutations(coins, total, memo);
     std::cout << "For Sum: " << total << " Total count: " << all_choices.size() << "\n";
+    std::cout << "For Sum: " << total << " All permutations count: " << second_count << "\n";
 
     state = 0;
-    std::vector<int> memo(total + 1, -1);
-    int count = coinChange_min(coins, total, memo);
+    std::vector<int> memo2(total + 1, -1);
+    int count = coinChange_min(coins, total, memo2);
     std::cout << "For Sum: " << total << " Min soln: " << count << "\n";
+    printVec(memo);
     return 0;
 }
