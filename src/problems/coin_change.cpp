@@ -33,17 +33,18 @@
 #include "utils.h"
 
 /* Find all paths to the node [], from the node N;
+ * Counts unique *combination* of coins.
  Time complexity is O(n^m), where n is the total amount and m is the number of coins.
  */
-auto coinChange_totalSoln(const std::set<int>& coins, int& state, std::set<std::vector<int>>& all_choices, std::vector<int>& curr_choices, const int total) -> void {
+auto coinChange_totalSoln(const std::set<int>& coins, int curr_sum, std::set<std::vector<int>>& all_choices, std::vector<int>& curr_choices, const int total) -> void {
     // Error handling
-    if (state > total) {
+    if (curr_sum > total) {
         std::cerr << "Invalid state";
         return;
     }
 
     // Base Case
-    if (state == total) {
+    if (curr_sum == total) {
         // Check is the permutation already exists.
         std::vector<int> choices(curr_choices.begin(), curr_choices.end());  // making a copy of current choices to as sort works in place.
         std::sort(choices.begin(), choices.end());
@@ -55,15 +56,15 @@ auto coinChange_totalSoln(const std::set<int>& coins, int& state, std::set<std::
     }
 
     // Explore all valid choices at current state.
-    auto old_state = state;
+    auto old_sum = curr_sum;
     for (const auto& coin : coins) {
-        if (state + coin <= total) {
-            state += coin;
+        if (curr_sum + coin <= total) {
+            curr_sum += coin;
             curr_choices.push_back(coin);
-            coinChange_totalSoln(coins, state, all_choices, curr_choices, total);
+            coinChange_totalSoln(coins, curr_sum, all_choices, curr_choices, total);
             // Backtrack
             curr_choices.pop_back();
-            state = old_state;
+            curr_sum = old_sum;
         }
     }
 }
@@ -135,6 +136,5 @@ auto main() -> int {
     std::vector<int> memo2(total + 1, -1);
     int count = coinChange_min(coins, total, memo2);
     std::cout << "For Sum: " << total << " Min soln: " << count << "\n";
-    printVec(memo);
     return 0;
 }
