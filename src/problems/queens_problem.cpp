@@ -1,5 +1,5 @@
 #include <vector>
-#include "array_utils.h"
+#include "utils.h"
 
 /* Problem Statement:
  * Given an integer N, find all possible arrangements of N queens on an NxN chessboard

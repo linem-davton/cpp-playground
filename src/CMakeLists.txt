@@ -3,7 +3,7 @@ add_library(matrices STATIC linear_algebra/matrices.cpp)
 
 # Subdirectories
 add_subdirectory(algorithms)
-
+add_subdirectory(problems)
 # Executables
 add_executable(hello hello.cpp)
 add_executable(fib fib.cpp)
