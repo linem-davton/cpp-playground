@@ -70,7 +70,7 @@ auto coinChange_totalSoln(const std::set<int>& coins, int& state, std::set<std::
 /*
  * Function return INT_MAX if there is no way to make the change.
  */
-auto coinChange_min(const std::set<int>& coins, int state) -> unsigned int {
+auto coinChange_min(const std::set<int>& coins, int state, std::vector<int>& memo) -> unsigned int {
     if (state < 0) {
         std::cerr << "Invalid state: State: " << state << "\n";
         return 0;
@@ -79,27 +79,33 @@ auto coinChange_min(const std::set<int>& coins, int state) -> unsigned int {
     if (state == 0) {
         return 0;
     }
+    if (memo[state] != -1) {
+        return memo[state];
+    }
     // Explore all choices
     unsigned int count = INT_MAX;
     for (const auto& coin : coins) {
         if (state - coin >= 0) {
-            count = std::min(coinChange_min(coins, state - coin) + 1, count);
+            count = std::min(coinChange_min(coins, state - coin, memo) + 1, count);
         }
     }
+
+    memo[state] = count;
     return count;
 }
 
 auto main() -> int {
     const std::set<int> coins{2, 4, 5, 10};
     int state = 0;
-    int total = 1;
+    int total = 3;
     std::vector<int> choices;
     std::set<std::vector<int>> all_choices;
     coinChange_totalSoln(coins, state, all_choices, choices, total);
     std::cout << "For Sum: " << total << " Total count: " << all_choices.size() << "\n";
 
     state = 0;
-    unsigned int count = coinChange_min(coins, total);
+    std::vector<int> memo(total + 1, -1);
+    int count = coinChange_min(coins, total, memo);
     std::cout << "For Sum: " << total << " Min soln: " << count << "\n";
     return 0;
 }
