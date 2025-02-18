@@ -83,6 +83,7 @@ auto coinChange_optimized(const std::set<int>& coins, int curr_sum, std::set<int
     }
 
     // Explore all valid choices at current state.
+    // Assumes coins are sorted by value, which they are in std::set.
     for (auto it = start; it != coins.end(); it++) {
         auto coin = *it;
         if (curr_sum + coin > total) {
