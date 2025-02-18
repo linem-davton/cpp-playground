@@ -25,10 +25,8 @@
  * 6. {10,2}
  */
 
-// Recursive solution.
 #include <algorithm>
 #include <climits>
-#include <cstddef>
 #include <iostream>
 #include <set>
 #include "utils.h"
@@ -68,6 +66,12 @@ auto coinChange_totalSoln(const std::set<int>& coins, int curr_sum, std::set<std
     }
 }
 
+/*
+ * Uses canonical ordering of coins to avoid permutations.
+ * Since std::set has ordered elements, we can use it to avoid permutations, as the solution requires the unique combinations,(rather than permutations).
+ * Next search starts from the current coin (to the end), to avoid the same solution in different order.
+ * Time complexity is O(n * m), where n is the total amount and m is the number of coins. (No longer n^m)
+ */
 auto coinChange_optimized(const std::set<int>& coins, int curr_sum, std::set<int>::const_iterator start, std::set<std::vector<int>>& all_choices, std::vector<int>& curr_choices, const int total) {
     // Error handling
     if (curr_sum > total) {
@@ -99,6 +103,8 @@ auto coinChange_optimized(const std::set<int>& coins, int curr_sum, std::set<int
 }
 
 // Note this will consider all the permutations as different choices.
+/*
+ */
 auto coinChange_allPermutations(const std::set<int>& coins, int state, std::vector<int>& memo) -> int {
     if (state < 0) {
         return 0;
@@ -147,7 +153,10 @@ auto coinChange_min(const std::set<int>& coins, int state, std::vector<int>& mem
     memo[state] = count;  // memoize
     return count;
 }
-
+/*
+ * Iterative version of the above function.
+ * Time complexity is O(n * m), where n is the total amount and m is the number of coins.
+ */
 auto coinChange_min_iter(const std::set<int>& coins, int total) -> std::vector<int> {
     // So the min is equal to
 
@@ -173,19 +182,21 @@ auto main() -> int {
     int total = 12;
     std::vector<int> choices;
     std::set<std::vector<int>> all_choices;
+
     // coinChange_totalSoln(coins, 0, all_choices, choices, total);
     coinChange_optimized(coins, 0, coins.begin(), all_choices, choices, total);
+    std::cout << "For Sum: " << total << " Total count: " << all_choices.size() << "\n";
 
     std::vector<int> memo(total + 1, -1);
     int second_count = coinChange_allPermutations(coins, total, memo);
-    std::cout << "For Sum: " << total << " Total count: " << all_choices.size() << "\n";
     std::cout << "For Sum: " << total << " All permutations count: " << second_count << "\n";
 
     std::vector<int> memo2(total + 1, -1);
     int count = coinChange_min(coins, total, memo2);
     std::cout << "For Sum: " << total << " Min soln: " << count << "\n";
+
     auto vec = coinChange_min_iter(coins, total);
-    printVec(vec);
     std::cout << "For Sum: " << total << " Min Iter Soln: " << vec[total] << "\n";
+    printVec(vec);
     return 0;
 }
