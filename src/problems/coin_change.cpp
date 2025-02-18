@@ -28,6 +28,7 @@
 // Recursive solution.
 #include <algorithm>
 #include <climits>
+#include <cstddef>
 #include <iostream>
 #include <set>
 #include "utils.h"
@@ -36,6 +37,7 @@
  * Brute Force: Counts unique *combination* of coins.
  Time complexity is O(n^m), where n is the total amount and m is the number of coins.
  */
+
 auto coinChange_totalSoln(const std::set<int>& coins, int curr_sum, std::set<std::vector<int>>& all_choices, std::vector<int>& curr_choices, const int total) -> void {
     // Error handling
     if (curr_sum > total) {
@@ -146,6 +148,26 @@ auto coinChange_min(const std::set<int>& coins, int state, std::vector<int>& mem
     return count;
 }
 
+auto coinChange_min_iter(const std::set<int>& coins, int total) -> std::vector<int> {
+    // So the min is equal to
+
+    // Let us hold for each value what is the min amount required to hold
+    std::vector<int> min_coins(total + 1, 1e8);
+
+    // Base case, how many ways to have total equal to 0, 0 ways.
+    min_coins[0] = 0;
+
+    for (int i = 1; i < (int)min_coins.size(); i++) {
+        // Explore all choices
+        for (const auto& coin : coins) {
+            if (i - coin >= 0) {  // Constraints validation: Can this coin be picked.
+                min_coins[i] = std::min(min_coins[i], min_coins[i - coin] + 1);
+            }
+        }
+    }
+    return min_coins;
+}
+
 auto main() -> int {
     const std::set<int> coins{2, 4, 5, 10};
     int total = 12;
@@ -162,5 +184,8 @@ auto main() -> int {
     std::vector<int> memo2(total + 1, -1);
     int count = coinChange_min(coins, total, memo2);
     std::cout << "For Sum: " << total << " Min soln: " << count << "\n";
+    auto vec = coinChange_min_iter(coins, total);
+    printVec(vec);
+    std::cout << "For Sum: " << total << " Min Iter Soln: " << vec[total] << "\n";
     return 0;
 }
