@@ -1,15 +1,14 @@
 #pragma once
-
 #include <algorithm>
 #include <optional>
 #include <vector>
+
 /* Classic Binary Search
  * Time Complexity - O(log n), Space Complexity - O(1)
  * Note: Array should be sorted
  * Not guranteed to return the first or last matching element
  *
  */
-
 template <typename T>
 auto binary_search(const std::vector<T>& vec, T key) -> std::optional<int> {
     int size = vec.size();
