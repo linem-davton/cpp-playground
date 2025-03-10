@@ -10,6 +10,7 @@ add_executable(fib fib.cpp)
 add_executable(matrix matrix.cpp)
 add_executable(jthreads jthreads.cpp)
 add_executable(macros macros.cpp)
-
+add_executable(bits bits.cpp)
+add_executable(numerics numerics.cpp)
 # Linking
 target_link_libraries(matrix PRIVATE matrices)
