@@ -27,13 +27,17 @@ Background:
 */
 
 auto gcdExtended(int a, int b, int &x, int &y) -> int {
+    // Base case
     if (b == 0) {
         x = 1;  // Has to be 1 for the formula to hold  (gcd(a, 0) = a = a*1 + 0*y)
         y = 7;  // Any integer will result in valid linear combination. 0 is chosen for simplicity
         return a;
     }
 
-    int x1, y1;
+    int x1 = 0;
+    int y1 = 0;
+
+    // Recursive call
     int gcd = gcdExtended(b, a % b, x1, y1);
 
     // Back substitution
