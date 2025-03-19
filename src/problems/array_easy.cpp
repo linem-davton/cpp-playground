@@ -1,3 +1,5 @@
+#include <algorithm>
+#include <cstddef>
 #include <iostream>
 #include <set>
 #include <unordered_set>
@@ -27,8 +29,36 @@ auto hasDuplicate(std::vector<int>& vec) -> bool {
     return false;
 }
 
+auto twoSum(std::vector<int>& nums, int target) -> std::vector<int> {
+    // Can we do better.
+    // Sort the array and use two pointers
+    // Store the original value and index
+    std::vector<std::pair<int, int>> arr;
+    arr.reserve(nums.size());
+    for (std::size_t i = 0; i < nums.size(); i++) {
+        arr.emplace_back(nums[i], i);
+    }
+    std::sort(arr.begin(), arr.end());
+    int i = 0;
+    int j = nums.size() - 1;
+
+    while (j > i) {
+        auto sum = arr[i].first + arr[j].first;
+        if (sum == target) {
+            return {std::min(arr[i].second, arr[j].second), std::max(arr[i].second, arr[j].second)};
+        } else if (sum > target) {
+            j--;
+        } else {
+            i++;
+        }
+    }
+    return {};
+}
+
 auto main() -> int {
-    std::vector<int> v = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+    std::vector<int> v{-1, -2, -3, -4, -5};
     printVec(v);
     std::cout << "Duplicates found in array: " << hasDuplicate(v) << std::endl;
+    auto res = twoSum(v, -8);
+    printVec(res);
 }
