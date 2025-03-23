@@ -3,7 +3,8 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
-
+#include <vector>
+#include "utils.h"
 /* Anagram: A word or phrase that is formed by rearranging the letters of another word or phrase.
  * For example, "listen" is an anagram of "silent".
  * Given two strings s and t, write a function to determine if t is an anagram of s.
@@ -43,8 +44,40 @@ auto isAnagram_map(std::string s, std::string t) -> bool {
     return s_ == t_;
 }
 
+void genstring(std::vector<std::string>& vec, int n, std::string& s, int f, int b) {
+    // Base conditions
+    if ((int)s.size() == 2 * n) {
+        std::cout << "s: " << s << " f: " << f << " b: " << b << std::endl;
+        vec.push_back(s);
+        return;
+    }
+    // Explore all choices
+    if (f > b) {  // max f = n, max b = n
+        s.append(")");
+        genstring(vec, n, s, f, ++b);
+        s.pop_back();
+        --b;
+    }
+    if (f < n) {
+        s.append("(");
+        genstring(vec, n, s, ++f, b);
+        s.pop_back();
+        --f;
+    }
+}
+auto generateParenthesis(int n) -> std::vector<std::string> {
+    std::vector<std::string> vec;
+    std::string s;
+    genstring(vec, n, s, 0, 0);
+    return vec;
+}
+
 auto main() -> int {
     std::string s = "racecar";
     std::string t = "carrace";
     std::cout << "Is Anagram: " << isAnagram(s, t) << std::endl;
+    std::vector<std::string> str = generateParenthesis(5);
+    printVec(str);
+    std::cout << "Size: " << str.size() << "\n";
+    return 0;
 }
