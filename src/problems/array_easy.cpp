@@ -3,6 +3,7 @@
 #include <iostream>
 #include <map>
 #include <set>
+#include <stack>
 #include <unordered_set>
 #include <vector>
 #include "utils.h"
@@ -84,13 +85,35 @@ auto topKFrequent(std::vector<int>& nums, int k) -> std::vector<int> {
     return res;
 }
 
-auto main() -> int {
-    std::vector<int> v{-1, -2, -3, -4, -5, -1, -5, -5};
-    printVec(v);
-    std::cout << "Duplicates found in array: " << hasDuplicate(v) << std::endl;
-    auto res = twoSum(v, -8);
-    printVec(res);
+auto dailyTemperatures(std::vector<int>& temp) -> std::vector<int> {
+    // Nearest Greater element for each element
+    std::stack<int> greater;
+    std::vector<int> out(temp.size());
+    for (std::size_t i = 0; i < temp.size(); i++) {
+        if (!greater.empty()) {
+            auto top = greater.top();
+            while (temp[i] > temp[top]) {
+                out[top] = i - top;
+                std::cout << "i: " << i << " out: " << out[i] << " top" << top << "\n";
+                greater.pop();
+                if (greater.empty()) break;
+                top = greater.top();
+            }
+        }
+        greater.push(i);
+    }
+    return out;
+}
 
-    auto res2 = topKFrequent(v, 2);
-    printVec(res2);
+auto main() -> int {
+    std::vector<int> v{1, 2, 3, 4, -5, -1, 5, -5};
+    // printVec(v);
+    // std::cout << "Duplicates found in array: " << hasDuplicate(v) << std::endl;
+    // auto res = twoSum(v, -8);
+    // printVec(res);
+
+    // auto res2 = topKFrequent(v, 2);
+    // printVec(res2);
+    auto res3 = dailyTemperatures(v);
+    printVec(res3);
 }
