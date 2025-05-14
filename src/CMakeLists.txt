@@ -14,6 +14,7 @@ add_executable(jthreads jthreads.cpp)
 add_executable(macros macros.cpp)
 add_executable(bits bits.cpp)
 add_executable(numerics numerics.cpp)
+add_executable(lifetimes lifetimes.cpp)
 
 # Linking
 target_link_libraries(matrix PRIVATE matrices)
