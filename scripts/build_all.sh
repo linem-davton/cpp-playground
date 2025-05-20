@@ -3,7 +3,15 @@
 # exit on error, expand variables, and show commands being run, error if any command in pipeline fails
 set -eo pipefail
 
-build_presets=("debug" "debug-sanitize" "release" "release-lto" "release-sanitize")
+# --- choose presets ---------------------------------------------------------
+if (( $# == 0 )); then                       # no args → default list
+    build_presets=(debug debug-sanitize release release-lto release-sanitize)
+else                                         # args → use exactly what was passed
+    build_presets=("$@")                     # supports one or many arguments
+fi
+# ----------------------------------------------------------------------------
+
+
 # Declare an array to hold the PIDs
 declare -a pids
 
