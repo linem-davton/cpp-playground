@@ -15,6 +15,6 @@ add_executable(macros macros.cpp)
 add_executable(bits bits.cpp)
 add_executable(numerics numerics.cpp)
 add_executable(lifetimes lifetimes.cpp)
-
+add_executable(overload_resolution overload_resolution.cpp)
 # Linking
 target_link_libraries(matrix PRIVATE matrices)
