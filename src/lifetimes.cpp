@@ -1,46 +1,40 @@
-#include <iostream>
-#include <initializer_list>
-#include <limits>
 #include <cmath>
+#include <initializer_list>
+#include <iostream>
+#include <limits>
 
 struct Tracker {
     Tracker() { std::cout << "Default ctor\n"; }
     Tracker(int) { std::cout << "Tracker(int)\n"; }
     Tracker(std::initializer_list<int>) { std::cout << "Tracker(init_list)\n"; }
     explicit Tracker(double) { std::cout << "Tracker(double)\n"; }
-    explicit Tracker(int, double){std::cout<<"Double ints \n";}
+    explicit Tracker(int, double) { std::cout << "Double ints \n"; }
     Tracker(const Tracker&) { std::cout << "Copy ctor\n"; }
     Tracker(Tracker&&) { std::cout << "Move ctor\n"; }
     ~Tracker() { std::cout << "~Tracker()\n"; }
 };
 
-void take(Tracker) {
-    std::cout << "take(Tracker by value)\n";
-}
+void take(Tracker) { std::cout << "take(Tracker by value)\n"; }
 
-void take(const Tracker&) {
-    std::cout << "take(const Tracker&)\n";
-}
+// void take(const Tracker&) { std::cout << "take(const Tracker&)\n"; }
 
-void take(Tracker&&) {
-    std::cout << "take(Tracker&&)\n";
-}
+// void take(Tracker&&) { std::cout << "take(Tracker&&)\n"; }
 
 struct Base {
     int val{0};
     int aval;
     Base() { std::cout << "Base\n"; }
-    Base(int val): val(val) { std::cout << "Base int\n"; }
+    Base(int val) : val(val) { std::cout << "Base int\n"; }
 };
 struct Member1 {
     int val;
     Member1() { std::cout << "Member1\n"; }
-    Member1(int val): val(val) { std::cout << "Member1 int\n";}
+    Member1(int val) : val(val) { std::cout << "Member1 int\n"; }
 };
 struct Member2 {
     int val;
     Member2() { std::cout << "Member2\n"; }
-    Member2(int val): val(val){ std::cout << "Member2 int\n"; }
+    Member2(int val) : val(val) { std::cout << "Member2 int\n"; }
 };
 struct Derived : Base {
     Member1 m1{2};
@@ -48,10 +42,18 @@ struct Derived : Base {
     Derived() : m1(10) { std::cout << "Derived\n"; }
 };
 
- extern "C" void foo(int);
-void foo(double){std::cout<<"double";}; // This is a C++ function
+extern "C" void foo(int);
+void foo(double) { std::cout << "double"; };  // This is a C++ function
 
-int main() {
+auto main() -> int {
+    Tracker&& t1 = Tracker();  // Rvalue reference to a temporary
+    std::cout << "Tracker&& t1 created\n";
+    const Tracker& t2 = t1;  // Calls the copy constructor
+    const Tracker& t3 = t2;  // Calls the copy constructor
+
+    take(t3);  // Calls take(Tracker by value)
+    std::cout << "Exiting main\n";
+    return 0;
 }
 
 // int main() { Derived d;
@@ -70,8 +72,8 @@ int main() {
 //
 //     std::cout<< 25u - 50 <<"\n";
 //     unsigned int s = 0;
-//     std::cout<< --s <<"\n"; // Underflow! 
-//   
+//     std::cout<< --s <<"\n"; // Underflow!
+//
 //   int i = 69;
 //   float& f = reinterpret_cast<float&>(i);
 //   char* c = reinterpret_cast<char*>(&i);

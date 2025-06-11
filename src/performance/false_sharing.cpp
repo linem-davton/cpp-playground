@@ -5,11 +5,11 @@
 
 struct S {
     double d;
-    // char pad[56]; // Uncomment to mitigate (assuming 64-byte cache line)
+    char pad[56];  // Uncomment to mitigate (assuming 64-byte cache line)
 };
 
 int main() {
-    constexpr size_t N = 1024 * 1024;
+    constexpr size_t N = 1024 * 1024 * 10;  // 10 MB
     std::vector<S> arr(2);
 
     auto worker = [&](int idx) {
