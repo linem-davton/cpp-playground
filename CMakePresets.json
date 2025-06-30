@@ -2,7 +2,7 @@
   "version": 3,
   "cmakeMinimumRequired": {
     "major": 3,
-    "minor": 28,
+    "minor": 25,
     "patch": 0
   },
   "configurePresets": [
@@ -17,13 +17,20 @@
       }
     },
     {
-      "name": "debug",
-      "displayName": "Debug Config",
+      "name": "compiler-defaults",
+      "hidden": true,
       "inherits": "base",
       "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -Werror -fno-omit-frame-pointer"
+      }
+    },
+    {
+      "name": "debug",
+      "displayName": "Debug Config",
+      "inherits": "compiler-defaults",
+      "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Debug",
-        "CMAKE_CXX_FLAGS_DEBUG": "-g",
-        "CMAKE_CXX_FLAGS": "-Wall -Wextra -Wpedantic -Werror -fno-omit-frame-pointer --coverage",
+        "CMAKE_CXX_FLAGS": "${parent.CMAKE_CXX_FLAGS} -g --coverage",
         "CMAKE_EXE_LINKER_FLAGS": "--coverage",
         "CMAKE_MODULE_LINKER_FLAGS": "--coverage",
         "CMAKE_SHARED_LINKER_FLAGS": "--coverage"
@@ -34,19 +41,30 @@
       "displayName": "Debug Sanitize Config",
       "inherits": "debug",
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined,leak -Wall -Wextra -Wpedantic -Werror -fno-omit-frame-pointer --coverage ",
-        "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address,undefined,leak",
-        "CMAKE_MODULE_LINKER_FLAGS": "-fsanitize=address,undefined,leak",
-        "CMAKE_SHARED_LINKER_FLAGS": "-fsanitize=address,undefined,leak"
+        "CMAKE_CXX_FLAGS": "${parent.CMAKE_CXX_FLAGS} -fsanitize=address,undefined",
+        "CMAKE_EXE_LINKER_FLAGS": "${parent.CMAKE_EXE_LINKER_FLAGS} -fsanitize=address,undefined",
+        "CMAKE_MODULE_LINKER_FLAGS": "${parent.CMAKE_MODULE_LINKER_FLAGS} -fsanitize=address,undefined",
+        "CMAKE_SHARED_LINKER_FLAGS": "${parent.CMAKE_SHARED_LINKER_FLAGS} -fsanitize=address,undefined"
+      }
+    },
+    {
+      "name": "debug-tsan",
+      "displayName": "Debug with Thread Sanitizer",
+      "inherits": "deug",
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "${parent.CMAKE_CXX_FLAGS} -fsanitize=thread ",
+        "CMAKE_EXE_LINKER_FLAGS": "${parent.CMAKE_EXE_LINKER_FLAGS} -fsanitize=thread",
+        "CMAKE_MODULE_LINKER_FLAGS": "${parent.CMAKE_MODULE_LINKER_FLAGS} -fsanitize=thread",
+        "CMAKE_SHARED_LINKER_FLAGS": "${parent.CMAKE_SHARED_LINKER_FLAGS} -fsanitize=thread"
       }
     },
     {
       "name": "release",
       "displayName": "Release Config",
-      "inherits": "base",
+      "inherits": "compiler-defaults",
       "cacheVariables": {
         "CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_CXX_FLAGS": "-O3 -march=native -mtune=native -DNDEBUG -fno-omit-frame-pointer"
+        "CMAKE_CXX_FLAGS": "${parent.CMAKE_CXX_FLAGS} -O3 -march=native -mtune=native -DNDEBUG"
       }
     },
     {
@@ -54,58 +72,74 @@
       "displayName": "Release Config with LTO",
       "inherits": "release",
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS_RELEASE": "-O3 -march=native -DNDEBUG -fno-omit-frame-pointer -flto=4 -fno-fat-lto-objects"
+        "CMAKE_CXX_FLAGS": "${parent.CMAKE_CXX_FLAGS} -flto=auto -fno-fat-lto-objects"
       }
     },
-
     {
       "name": "release-sanitize",
       "displayName": "Release with Sanitizers",
       "inherits": "release",
       "cacheVariables": {
-        "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined,leak -O3 -march=native -mtune=native -DNDEBUG -fno-omit-frame-pointer",
-        "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address,undefined,leak",
-        "CMAKE_MODULE_LINKER_FLAGS": "-fsanitize=address,undefined,leak",
-        "CMAKE_SHARED_LINKER_FLAGS": "-fsanitize=address,undefined,leak"
+        "CMAKE_CXX_FLAGS": "${parent.CMAKE_CXX_FLAGS} -fsanitize=address,undefined",
+        "CMAKE_EXE_LINKER_FLAGS": "-fsanitize=address,undefined",
+        "CMAKE_MODULE_LINKER_FLAGS": "-fsanitize=address,undefined",
+        "CMAKE_SHARED_LINKER_FLAGS": "-fsanitize=address,undefined"
+      }
+    },
+    {
+      "name": "release-lto-pgo-generate",
+      "displayName": "Release LTO (PGO Generate)",
+      "inherits": "release-lto",
+      "description": "Builds an instrumented binary for profile data generation.",
+      "binaryDir": "${sourceDir}/build/release-lto-pgo-generate",
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "${parent.CMAKE_CXX_FLAGS} -fprofile-generate",
+        "CMAKE_EXE_LINKER_FLAGS": "${parent.CMAKE_EXE_LINKER_FLAGS} -fprofile-generate",
+        "CMAKE_MODULE_LINKER_FLAGS": "${parent.CMAKE_MODULE_LINKER_FLAGS} -fprofile-generate",
+        "CMAKE_SHARED_LINKER_FLAGS": "${parent.CMAKE_SHARED_LINKER_FLAGS} -fprofile-generate"
+      }
+    },
+    {
+      "name": "release-lto-pgo-use",
+      "displayName": "Release LTO (PGO Use)",
+      "inherits": "release-lto",
+      "description": "Builds the final optimized binary using profile data.",
+      "binaryDir": "${sourceDir}/build/release-lto-pgo-use",
+      "cacheVariables": {
+        "CMAKE_CXX_FLAGS": "${parent.CMAKE_CXX_FLAGS} -fprofile-use -fprofile-dir=${sourceDir}/build/release-lto-pgo-generate",
+        "CMAKE_EXE_LINKER_FLAGS": "${parent.CMAKE_EXE_LINKER_FLAGS} -fprofile-use -fprofile-dir=${sourceDir}/build/release-lto-pgo-generate",
+        "CMAKE_MODULE_LINKER_FLAGS": "${parent.CMAKE_MODULE_LINKER_FLAGS} -fprofile-use -fprofile-dir=${sourceDir}/build/release-lto-pgo-generate",
+        "CMAKE_SHARED_LINKER_FLAGS": "${parent.CMAKE_SHARED_LINKER_FLAGS} -fprofile-use -fprofile-dir=${sourceDir}/build/release-lto-pgo-generate"
       }
     }
   ],
-
   "buildPresets": [
     {
       "name": "debug",
-      "configurePreset": "debug",
-      "configuration": "Debug"
+      "configurePreset": "debug"
     },
     {
       "name": "debug-sanitize",
-      "configurePreset": "debug-sanitize",
-      "configuration": "Debug"
+      "configurePreset": "debug-sanitize"
     },
     {
       "name": "release",
-      "configurePreset": "release",
-      "configuration": "Release"
+      "configurePreset": "release"
     },
     {
       "name": "release-lto",
-      "configurePreset": "release-lto",
-      "configuration": "Release"
+      "configurePreset": "release-lto"
     },
     {
       "name": "release-sanitize",
-      "configurePreset": "release-sanitize",
-      "configuration": "Release"
+      "configurePreset": "release-sanitize"
     }
   ],
-
   "testPresets": [
     {
       "name": "test-base",
       "hidden": true,
-      "output": {
-        "outputOnFailure": true
-      },
+      "output": { "outputOnFailure": true },
       "execution": {
         "noTestsAction": "error",
         "stopOnFailure": true,
