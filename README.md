@@ -138,9 +138,6 @@ strace -k ./a.out # print call stack
 
 ```BASH
 sudo apt install heaptrack
-```
-
-```BASH
 heaptrack ./a.out # get heap memory statistics
 heaptrack --analyze heaptrack*.zst # analyze the heap memory statistics
 ```

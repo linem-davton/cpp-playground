@@ -24,6 +24,16 @@ Compare the above to
 
 ## Perf Benchmarks
 
+TopdownL1 gives a breakdown of the performance counters into disjoint and exhaustive categories:
+
+- Frontend: Waiting for instructions, >30% is not cause of concern.,
+- Backend: Waiting for memory, >30% is cause of concern.
+- Bad speculation: Brach Mispredictions, >2% is cause of concern.
+- Retiring: actually executing. >70% is good.
+
+** Minor Page Faults **: Page requested is already in memory, but not in the process's address space. This is a normal operation and does not cause a performance hit.
+** Major Page Faults **: Page requested is not in memory and needs to be loaded from disk. This causes a performance hit (Disk I/O).
+
 1. For a 1000x1000 matrix multiplication, the cache friendly version is 2x faster than the non-cache friendly version.
 
 ### Debug Builds
