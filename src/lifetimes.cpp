@@ -31,17 +31,6 @@ struct Derived : Base {
 
 extern "C" void foo(int);
 void foo(double) { std::cout << "double"; };  // This is a C++ function
-//
-// auto main() -> int {
-//     Tracker&& t1 = Tracker();  // Rvalue reference to a temporary
-//     std::cout << "Tracker&& t1 created\n";
-//     const Tracker& t2 = t1;  // Calls the copy constructor
-//     const Tracker& t3 = t2;  // Calls the copy constructor
-//
-//     take(t3);  // Calls take(Tracker by value)
-//     std::cout << "Exiting main\n";
-//     return 0;
-// }
 
 auto main() -> int {
     // std::cout << 25u - 50 << "\n";
