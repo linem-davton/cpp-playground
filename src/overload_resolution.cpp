@@ -1,6 +1,6 @@
 #include <iostream>
-#include <vector>
 #include <memory>
+#include <vector>
 
 struct Logger {
     Logger() { std::cout << "Logger constructed\n"; }
@@ -13,29 +13,24 @@ struct Resource {
     std::shared_ptr<Logger> logger;
     int* data;
     size_t size;
-    
-    Resource(size_t sz) : logger(std::make_shared<Logger>()), data(new int[sz]), size(sz) {
-        std::cout << "Resource constructed with size " << sz << "\n";
-    }
+
+    Resource(size_t sz) : logger(std::make_shared<Logger>()), data(new int[sz]), size(sz) { std::cout << "Resource constructed with size " << sz << "\n"; }
     ~Resource() {
         delete[] data;
         std::cout << "Resource destructed\n";
     }
-    
+
     // Rule of Five: Only copy constructor explicitly implemented!
-    Resource(const Resource& other)
-        : logger(other.logger), size(other.size)
-    {
+    Resource(const Resource& other) : logger(other.logger), size(other.size) {
         data = new int[size];
         std::copy(other.data, other.data + size, data);
         std::cout << "Resource copied\n";
     }
-  Resource(Resource&& other): logger(std::move(other.logger)), data(other.data), size(other.size) {
-    other.data = nullptr;
-    other.size = 0;
-    std::cout<<"Resource moved\n";
-
-  }
+    Resource(Resource&& other) : logger(std::move(other.logger)), data(other.data), size(other.size) {
+        other.data = nullptr;
+        other.size = 0;
+        std::cout << "Resource moved\n";
+    }
 };
 
 Resource make_resource(int n) {
@@ -51,7 +46,6 @@ struct S {
     ~S() { std::cout << "S dtor\n"; }
 };
 
-
 int main() {
     // S s;
     // std::vector<Resource> vec;
@@ -60,9 +54,7 @@ int main() {
     // vec.push_back(vec[0]);
     int* p = new int(5);
     int& k = *p;
-    std::cout<<"k:" << k<<" *p:"<<*p <<"\n";
+    std::cout << "k:" << k << " *p:" << *p << "\n";
     delete p;
-    std::cout<<"k:" << k<<" *p "<<*p <<"\n";
     return 0;
 }
-

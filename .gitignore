@@ -1,11 +1,15 @@
 build/
-**/*.i
-**/*.o
-**/*.s
-**/*.out
+*.i
+*.o
+*.s
+*.out
+*.data
+*.pl
+*.log
+*.exe
 build/
 out/
 .cache/
-**/coverage.info
-**/doxygen-output
+coverage.info
+doxygen-output
 
