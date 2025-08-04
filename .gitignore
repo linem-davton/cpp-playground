@@ -10,6 +10,7 @@ build/
 build/
 out/
 .cache/
+.vscode/
 coverage.info
 doxygen-output
 
